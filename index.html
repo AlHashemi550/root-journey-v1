@@ -3,197 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كتاب رحلة Root - أبو يزن الهاشمي</title>
+    <title>رحلة Root - أبو يزن الهاشمي</title>
     <style>
-        :root { --gold: #c0a060; --maroon: #800040; --bg: #1a1a1a; --paper: #ffffff; }
+        :root { --gold: #c0a060; --maroon: #800040; --bg: #111; }
+        body { background-color: var(--bg); margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; overflow-x: auto; }
         
-        body { 
-            background-color: var(--bg); 
-            margin: 0; padding: 0; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* شريط التحكم العلوي المطور */
-        .reader-controls {
+        /* شريط تحكم ثابت لا يتأثر بالزوم */
+        .toolbar {
             position: fixed; top: 0; left: 0; right: 0; height: 60px;
             background: #000; display: flex; justify-content: center; align-items: center;
-            gap: 15px; z-index: 1000; border-bottom: 2px solid var(--gold);
+            gap: 20px; z-index: 9999; border-bottom: 2px solid var(--gold);
         }
-        .zoom-info { color: var(--gold); font-weight: bold; min-width: 60px; text-align: center; }
-        .control-btn {
-            background: var(--gold); color: #000; border: none; padding: 8px 15px;
-            border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px;
-        }
+        .btn { background: var(--gold); border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .zoom-val { color: var(--gold); font-family: monospace; font-size: 1.2em; }
 
-        /* حاوية الكتاب الأساسية */
-        #book-viewport {
-            margin-top: 80px; padding: 20px;
-            display: flex; flex-direction: column; align-items: center;
-            perspective: 1000px;
-        }
-
-        #book-canvas {
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* حاوية التكبير - هنا السر */
+        #render-area {
+            margin-top: 80px;
             transform-origin: top center;
-            width: 100%; max-width: 950px;
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
         }
 
-        /* تصميم ورقة الكتاب */
-        .page {
-            background: var(--paper); color: #333;
-            margin-bottom: 40px; padding: 50px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            border-radius: 2px; position: relative;
-            min-height: 800px; box-sizing: border-box;
-        }
-        .page::before {
-            content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 15px;
-            background: linear-gradient(to left, rgba(0,0,0,0.1), transparent);
+        .book-page {
+            background: white; color: #333;
+            width: 900px; min-height: 1100px;
+            margin-bottom: 50px; padding: 60px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            box-sizing: border-box; position: relative;
+            border-right: 15px solid var(--maroon);
         }
 
-        h2 { color: var(--maroon); border-bottom: 3px solid var(--gold); padding-bottom: 10px; font-size: 2em; }
-        h3 { color: #444; border-right: 5px solid var(--maroon); padding-right: 15px; margin-top: 30px; }
+        h1, h2 { color: var(--maroon); border-bottom: 3px solid var(--gold); padding-bottom: 10px; }
+        .table-wrap { width: 100%; margin: 30px 0; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: var(--maroon); color: white; padding: 15px; border: 1px solid #500; }
+        td { padding: 15px; border: 1px solid #ddd; text-align: center; font-weight: bold; font-size: 1.1em; }
 
-        /* الجداول - عرض كامل بدون تمرير */
-        .table-container { width: 100%; margin: 25px 0; }
-        table { width: 100%; border-collapse: collapse; table-layout: auto; }
-        th { background: var(--maroon); color: white; padding: 15px; text-align: center; border: 1px solid #600030; }
-        td { padding: 15px; border: 1px solid #ddd; text-align: center; font-size: 1.1em; line-height: 1.4; }
-        tr:nth-child(even) { background: #f9f9f9; }
-
-        .note-box { background: #fffde7; border: 1px solid #ffe082; padding: 20px; border-right: 6px solid #fbc02d; margin: 20px 0; }
-        .code-block { background: #2b2b2b; color: #a9b7c6; padding: 20px; border-radius: 4px; font-family: 'Courier New', monospace; direction: ltr; text-align: left; margin: 20px 0; }
-
-        .page-num { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: #999; font-size: 0.9em; }
+        .cover-page { text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .logo { width: 250px; margin: 30px 0; filter: drop-shadow(0 0 10px rgba(0,0,0,0.2)); }
+        .cmd { background: #222; color: #0f0; padding: 20px; border-radius: 5px; direction: ltr; text-align: left; font-family: monospace; }
+        .page-num { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: #aaa; }
     </style>
 </head>
 <body>
 
-    <div class="reader-controls">
-        <button class="control-btn" onclick="adjustZoom(0.1)">تـكـبـيـر +</button>
-        <span class="zoom-info" id="zLabel">100%</span>
-        <button class="control-btn" onclick="adjustZoom(-0.1)">تـصـغـيـر -</button>
-        <button class="control-btn" style="background:#eee" onclick="resetZoom()">إعادة ضبط</button>
+    <div class="toolbar">
+        <button class="btn" onclick="zoom(0.1)">تكبير +</button>
+        <span class="zoom-val" id="zText">100%</span>
+        <button class="btn" onclick="zoom(-0.1)">تصغير -</button>
+        <button class="btn" style="background:#fff" onclick="resetZ()">إعادة</button>
     </div>
 
-    <div id="book-viewport">
-        <div id="book-canvas">
-
-            <div class="page" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
-                <h1 style="font-size: 4em; color: var(--maroon); margin: 0;">رحلة Root</h1>
-                <p style="font-size: 1.8em; color: var(--gold);">من الصفر حتى الاحتراف في الأمن السيبراني</p>
-                <div style="margin: 40px 0;">
-                    <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" style="width: 200px;">
-                </div>
-                <p style="font-size: 1.4em;">إعداد: أبو يزن الهاشمي</p>
-                <p>تاريخ الإصدار: 15 مايو 2026</p>
-                <div class="page-num">غلاف الكتاب</div>
-            </div>
-
-            <div class="page">
-                <h2>الدرس الأول: لغة الآلة (Binary System)</h2>
-                <p>الحاسوب لا يفهم الحروف بل يفهم (0) إغلاق و (1) تشغيل، وتتكون من أرقام ثنائية وتمشي بمبدأ المضاعفة.</p>
-                
-                <h3>| مثال تحليل الرقم (10) بـ 4 خانات:</h3>
-                <div class="table-container">
-                    <table>
-                        <thead><tr><th>القيمة</th><th>8</th><th>4</th><th>2</th><th>1</th></tr></thead>
-                        <tbody><tr><td>الاستخدام</td><td>نعم (1)</td><td>لا (0)</td><td>نعم (1)</td><td>لا (0)</td></tr></tbody>
-                    </table>
-                </div>
-                <p>التحليل النهائي لرقم عشرة هو: <b>(1010)</b>.</p>
-                <div class="note-box">
-                    <b>البت والبايت:</b><br>
-                    • <b>البت (Bit):</b> أصغر وحدة رقمية.<br>
-                    • <b>البايت (Byte):</b> مجموعة من 8 بت.
-                </div>
-                <div class="page-num">صفحة 1</div>
-            </div>
-
-            <div class="page">
-                <h2>الدرس الثاني: مفاهيم أساسيات الشبكات</h2>
-                <p>الشبكات هي وسيلة تنقل معلومات، ويجب توفير المستلزمات التالية لضمان عملها:</p>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr><th>المصطلح</th><th>الوظيفة والوصف</th><th>المثال التوضيحي (الهاشمي)</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>IP Address</td><td>عنوان المكان أو الموقع المراد إيجاده.</td><td>مثل أخوك الضائع في شارع مجهول.</td></tr>
-                            <tr><td>DNS</td><td>يحول الأسماء لأرقام (دليل الهاتف).</td><td>بدونه تتعطل الرؤية رغم عمل الأسلاك.</td></tr>
-                            <tr><td>Ports</td><td>منافذ تنفيذ الطلبات (لكل بورت رقم).</td><td>فتحات في جدار البيت (80/443).</td></tr>
-                            <tr><td>Firewall</td><td>الحارس الشخصي (يقرر من يدخل).</td><td>حماية المنافذ من المتسللين.</td></tr>
-                            <tr><td>البروتوكول</td><td>اللغة المشتركة لضمان الفهم.</td><td>اتفاقية تضمن وصول البيانات سليمة.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="page-num">صفحة 2</div>
-            </div>
-
-            <div class="page">
-                <h2>الدرس الثالث: أمن الشبكة والتشفير</h2>
-                <h3>1. أمن الشبكة (حماية الطريق)</h3>
-                <div class="note-box" style="background:#fff3e0; border-right-color:#ff9800;">
-                    <b>القاعدة الذهبية:</b> أي رسالة تخرج من جهازك هي "رسالة مراقبة" ما لم تكن مشفرة.
-                </div>
-                <p>الـ <b>VPN</b> يصنع نفقاً مشفراً، بينما <b>HTTPS</b> يضمن المصافحة الآمنة (Secure).</p>
-
-                <h3>2. التشفير (Encryption)</h3>
-                <div class="table-container">
-                    <table>
-                        <tr><th>النوع</th><th>الفكرة</th><th>الاستخدام</th></tr>
-                        <tr><td>المتماثل (Symmetric)</td><td>مفتاح واحد للقفل والفتح.</td><td>تشفير الملفات الضخمة.</td></tr>
-                        <tr><td>غير المتماثل (Asymmetric)</td><td>مفتاح عام (يقفل) ومفتاح خاص (يفتح).</td><td>تبادل المفاتيح الآمن.</td></tr>
-                    </table>
-                </div>
-                <div class="page-num">صفحة 3</div>
-            </div>
-
-            <div class="page">
-                <h2>الدرس الرابع والخامس: الهجمات ومعركة الثغرات</h2>
-                <div class="table-container">
-                    <table>
-                        <tr><th>الهجمة</th><th>الشرح</th><th>الحل</th></tr>
-                        <tr><td>SQL Injection</td><td>تلاعب بقواعد البيانات.</td><td>فلترة المدخلات.</td></tr>
-                        <tr><td>DDoS Attack</td><td>إغراق الموقع بطلبات وهمية.</td><td>أنظمة توزيع الضغط.</td></tr>
-                        <tr><td>XSS</td><td>وضع كود خبيث في الصفحات.</td><td>تشفير المخرجات.</td></tr>
-                    </table>
-                </div>
-                <h3>| صلاحيات الملفات الكبرى (RWX):</h3>
-                <ul>
-                    <li><b>Read (R):</b> قراءة المحتوى.</li>
-                    <li><b>Write (W):</b> تعديل المحتوى (خطر الفدية).</li>
-                    <li><b>Execute (X):</b> تشغيل البرامج (خطر الأبواب الخلفية).</li>
-                </ul>
-                <div class="page-num">صفحة 4</div>
-            </div>
-
+    <div id="render-area">
+        
+        <div class="book-page cover-page">
+            <h1 style="font-size: 4em; border:none; margin:0;">رحلة Root</h1>
+            <h2 style="border:none; color:var(--gold);">من الصفر حتى الاحتراف</h2>
+            <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" class="logo">
+            <p style="font-size: 1.5em;">إعداد: أبو يزن الهاشمي</p>
+            <p>Cyber Security Guide 2026</p>
+            <div class="page-num">غلاف الكتاب</div>
         </div>
+
+        <div class="book-page">
+            <h2>الدرس الأول: لغة الآلة (Binary System)</h2>
+            <p>الحاسوب يفهم (0) و (1) فقط. إليك تحليل الرقم (10):</p>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>القيمة</th><th>8</th><th>4</th><th>2</th><th>1</th></tr>
+                    <tr><td>الاستخدام</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                </table>
+            </div>
+            <p>النتيجة النهائية: <b>1010</b></p>
+            <div class="page-num">صفحة 1</div>
+        </div>
+
+        <div class="book-page">
+            <h2>الدرس الثاني: أساسيات الشبكات</h2>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>المصطلح</th><th>الوظيفة</th><th>المثال</th></tr>
+                    <tr><td>IP Address</td><td>عنوان الجهاز</td><td>عنوان منزلك</td></tr>
+                    <tr><td>DNS</td><td>دليل العناوين</td><td>يحول الاسم لرقم</td></tr>
+                    <tr><td>Ports</td><td>المنافذ</td><td>فتحات الجدار (80/443)</td></tr>
+                    <tr><td>Firewall</td><td>الحارس</td><td>حماية المنافذ</td></tr>
+                </table>
+            </div>
+            <div class="page-num">صفحة 2</div>
+        </div>
+
+        <div class="book-page">
+            <h2>الدرس الخامس: أنواع الهجوم والحلول</h2>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>الهجمة</th><th>الشرح</th><th>الحل</th></tr>
+                    <tr><td>XSS</td><td>حقن أكواد خبيثة</td><td>تشفير المخرجات</td></tr>
+                    <tr><td>SQL Injection</td><td>تلاعب بالقواعد</td><td>فلترة المدخلات</td></tr>
+                </table>
+            </div>
+            <h3>قواعد الحماية:</h3>
+            <ul>
+                <li>أغلق البورتات غير الضرورية.</li>
+                <li>استخدم تشفير HTTPS.</li>
+                <li>طبق قاعدة الصلاحيات الدنيا.</li>
+            </ul>
+            <div class="page-num">صفحة 3</div>
+        </div>
+
+        <div class="book-page">
+            <h2>الدرس السادس: الصلاحيات وفحص النظام</h2>
+            <p>الهدف هو الوصول لرتبة <b>Root</b> (التحكم المطلق).</p>
+            <h3>أوامر Linux/Termux:</h3>
+            <div class="cmd">
+                uname -a # فحص النواة<br>
+                id # معرفة الصلاحيات<br>
+                ls -la # عرض RWX
+            </div>
+            <h3>أوامر Windows:</h3>
+            <div class="cmd">
+                tasklist # عرض العمليات<br>
+                kill -9 [PID] # قتل العملية
+            </div>
+            <div class="page-num">صفحة 4</div>
+        </div>
+
     </div>
 
     <script>
-        let zoomLevel = 1.0;
-        const canvas = document.getElementById('book-canvas');
-        const label = document.getElementById('zLabel');
-
-        function adjustZoom(amount) {
-            zoomLevel += amount;
-            if(zoomLevel < 0.5) zoomLevel = 0.5;
-            if(zoomLevel > 2.5) zoomLevel = 2.5;
-            applyZoom();
+        let currentZoom = 1.0;
+        function zoom(val) {
+            currentZoom += val;
+            apply();
         }
-
-        function resetZoom() {
-            zoomLevel = 1.0;
-            applyZoom();
+        function resetZ() {
+            currentZoom = 1.0;
+            apply();
         }
-
-        function applyZoom() {
-            canvas.style.transform = "scale(" + zoomLevel + ")";
-            label.innerText = Math.round(zoomLevel * 100) + "%";
+        function apply() {
+            document.getElementById('render-area').style.transform = "scale(" + currentZoom + ")";
+            document.getElementById('zText').innerText = Math.round(currentZoom * 100) + "%";
         }
     </script>
-
 </body>
 </html>
