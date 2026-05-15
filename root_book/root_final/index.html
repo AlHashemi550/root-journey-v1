@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة Root - الأمن السيبراني</title>
+    <style>
+        /* استدعاء خطوط عربية تقترب من الرقعة */
+        @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;600&display=swap');
+
+        :root { --main-gold: #d4af37; --bg-dark: #0a0a0a; }
+        body { margin: 0; background: var(--bg-dark); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
+        
+        /* تصميم الغلاف */
+        .cover {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); text-align: center; padding: 20px;
+        }
+        .hacker-icon { font-size: 80px; filter: drop-shadow(0 0 10px var(--main-gold)); margin-bottom: 20px; }
+        .title-ruqaa { font-family: 'Aref Ruqaa', serif; font-size: 4rem; color: var(--main-gold); margin: 0; }
+        .subtitle { font-size: 1.2rem; color: #ccc; margin-top: 10px; border-bottom: 1px solid var(--main-gold); padding-bottom: 10px; }
+        
+        .author-info { margin-top: 50px; font-size: 0.9rem; line-height: 1.8; }
+        .btn-start { margin-top: 30px; padding: 15px 40px; background: var(--main-gold); color: black; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+
+        /* منطقة الدروس */
+        .page-content { display: none; padding: 20px; max-width: 800px; margin: auto; }
+        .lesson-header { font-family: 'Aref Ruqaa', serif; color: var(--main-gold); font-size: 2.5rem; border-right: 5px solid var(--main-gold); padding-right: 15px; margin-bottom: 30px; }
+        
+        /* جداول الدروس */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: rgba(255,255,255,0.05); }
+        th, td { border: 1px solid #444; padding: 15px; text-align: center; }
+        th { background: var(--main-gold); color: black; }
+        
+        .empty-state { border: 2px dashed #444; padding: 40px; text-align: center; color: #666; border-radius: 20px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="coverPage" class="cover">
+        <div class="hacker-icon">🎩💻</div>
+        <h1 class="title-ruqaa">رحلة Root</h1>
+        <p class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني<br><small>From Zero to Hero in Cyber Security</small></p>
+        
+        <div class="author-info">
+            <div style="color: var(--main-gold);">المدون: أبو يزن الهاشمي</div>
+            <div>هاتف: 783234925</div>
+            <div style="font-size: 0.8rem; opacity: 0.6;">تاريخ الإنشاء: 15 مايو 2026</div>
+        </div>
+
+        <button class="btn-start" onclick="showLessons()">تصفح الدروس</button>
+    </div>
+
+    <div id="lessonPage" class="page-content">
+        <button onclick="location.reload()" style="background:none; border:1px solid var(--main-gold); color:var(--main-gold); padding:5px 15px; cursor:pointer; border-radius:5px;">↩ الغلاف</button>
+        
+        <div id="lesson1">
+            <h2 class="lesson-header">الدرس الأول: (بانتظار عنوانك..)</h2>
+            <div class="empty-state">
+                <p>هذه الصفحة فارغة وجاهزة لاستقبال درسك الأول يا مهندس أبو يزن.</p>
+                <p>أعطني المعلومات وسأقوم بجدولتها لك هنا فوراً.</p>
+            </div>
+        </div>
+
+        </div>
+
+    <script>
+        function showLessons() {
+            document.getElementById('coverPage').style.display = 'none';
+            document.getElementById('lessonPage').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
+
