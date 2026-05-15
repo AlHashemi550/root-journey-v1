@@ -3,116 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كتاب رحلة Root - النسخة الملكية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>رحلة Root - النسخة الثابتة</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
-        
         :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; }
         
-        body { 
-            background: var(--bg); margin: 0; padding: 0; 
-            font-family: 'Aref Ruqaa', serif; overflow: hidden;
-            display: flex; flex-direction: column; height: 100vh;
-        }
+        body { background: var(--bg); margin: 0; padding: 0; font-family: 'Aref Ruqaa', serif; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
 
-        .header-tools {
-            position: fixed; top: 0; width: 100%; height: 60px;
-            background: #111; display: flex; justify-content: center; align-items: center;
-            gap: 15px; z-index: 10000; border-bottom: 2px solid var(--gold);
-        }
-        .zoom-btn {
-            background: var(--gold); color: #000; border: none; padding: 8px 18px;
-            border-radius: 6px; cursor: pointer; font-weight: bold; font-family: sans-serif;
-        }
+        /* أدوات التحكم */
+        .header-tools { position: fixed; top: 0; width: 100%; height: 60px; background: #111; display: flex; justify-content: center; align-items: center; gap: 15px; z-index: 10000; border-bottom: 2px solid var(--gold); }
+        .zoom-btn { background: var(--gold); color: #000; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: sans-serif; }
 
-        #viewport {
-            flex: 1; display: flex; align-items: center; justify-content: center;
-            overflow: hidden; background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
-        }
+        #viewport { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); }
+        #zoom-layer { transition: transform 0.4s ease-out; transform-origin: center center; display: flex; align-items: center; justify-content: center; }
 
-        #zoom-layer {
-            transition: transform 0.4s ease-out; transform-origin: center center;
-            display: flex; align-items: center; justify-content: center;
-        }
+        /* هيكل الكتاب الثابت */
+        .book-container { width: 90vw; max-width: 800px; height: 85vh; position: relative; }
+        
+        .page { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none; padding: 40px; box-sizing: border-box; border-radius: 15px; border: 4px solid var(--gold); background: #000; text-align: center; color: #fff; }
+        .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-        .cover-box {
-            width: 90vw; max-width: 800px; height: 85vh;
-            background: #000; border: 4px solid var(--gold); border-radius: 20px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px; box-sizing: border-box; text-align: center;
-            box-shadow: 0 0 50px rgba(192, 160, 96, 0.2);
-        }
+        /* رسمة الهكر المثبتة */
+        .hacker-icon { font-size: 140px; color: var(--pink); margin-bottom: 20px; text-shadow: 0 0 30px var(--pink); }
 
-        /* أيقونة الهكر المتوهجة (مضمونة الظهور) */
-        .hacker-icon {
-            font-size: 150px;
-            color: var(--pink);
-            margin-bottom: 30px;
-            text-shadow: 0 0 30px var(--pink);
-        }
+        h1 { color: var(--pink); font-size: 5em; margin: 0; text-shadow: 0 0 25px rgba(233,30,99,0.7); }
+        .subtitle { font-size: 1.6em; color: #fff; margin: 15px 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 10px 0; width: 85%; }
+        .author-info { color: var(--gold); font-size: 1.5em; margin-top: 25px; line-height: 1.5; }
 
-        h1 { 
-            color: var(--pink); font-size: 5.5em; margin: 0; 
-            text-shadow: 0 0 30px rgba(233, 30, 99, 0.7); 
-        }
-
-        .subtitle {
-            font-size: 1.8em; color: #fff; margin: 15px 0;
-            border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
-            padding: 10px 0; width: 85%;
-        }
-
-        .info { color: var(--gold); font-size: 1.6em; margin-top: 30px; line-height: 1.6; }
+        /* أزرار التنقل */
+        .nav-dock { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 40px; z-index: 1000; }
+        .nav-link { background: #500000; color: #fff; border: 2px solid var(--gold); padding: 12px 45px; border-radius: 50px; cursor: pointer; font-family: 'Aref Ruqaa', serif; font-size: 1.2em; }
     </style>
 </head>
 <body>
 
     <div class="header-tools">
         <button class="zoom-btn" onclick="zoom(0.1)">تكبير +</button>
-        <span id="zoomVal" style="color:var(--gold); font-weight:bold; width:60px; text-align:center;">100%</span>
+        <span id="zVal" style="color:var(--gold); font-weight:bold; width:60px; text-align:center;">100%</span>
         <button class="zoom-btn" onclick="zoom(-0.1)">تصغير -</button>
-        <button class="zoom-btn" style="background:#fff" onclick="autoFit()">الوضع التلقائي</button>
+        <button class="zoom-btn" style="background:#fff" onclick="autoFit()">الضبط التلقائي</button>
     </div>
 
     <div id="viewport">
         <div id="zoom-layer">
-            <div class="cover-box">
-                <i class="fa-solid fa-user-secret hacker-icon"></i>
+            <div class="book-container" id="pages-container">
                 
-                <h1>رحلة Root</h1>
-                <div class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني<br><small>Journey of Root (Ar-En)</small></div>
-                
-                <div class="info">
-                    المدون: <b>أبو يزن الهاشمي</b><br>
-                    الهاتف: 783234925
+                <div class="page active" id="p0">
+                    <i class="bi bi-incognito hacker-icon"></i>
+                    <h1>رحلة Root</h1>
+                    <div class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني<br><small>Journey of Root (Ar-En)</small></div>
+                    <div class="author-info">المدون: <b>أبو يزن الهاشمي</b><br>الهاتف: 783234925</div>
+                    <div style="margin-top:20px; color:#444; font-size:0.8em;">تاريخ الإنشاء: 15 مايو 2026</div>
                 </div>
 
-                <div style="margin-top:20px; color:#444; font-size:0.8em;">
-                    تاريخ الإنشاء: 15 مايو 2026
                 </div>
-            </div>
         </div>
     </div>
 
+    <div class="nav-dock">
+        <button class="nav-link" onclick="prevPage()">السابق</button>
+        <button class="nav-link" onclick="nextPage()">التالي</button>
+    </div>
+
     <script>
-        let currentScale = 1.0;
-        const layer = document.getElementById('zoom-layer');
+        let scale = 1.0;
+        let currentPage = 0;
+        const totalPages = 1; // سنزيد هذا الرقم مع كل درس جديد
 
         function autoFit() {
             const sw = window.innerWidth;
-            currentScale = (sw < 700) ? (sw / 850) : 1.0;
-            update();
+            scale = (sw < 700) ? (sw / 850) : 1.0;
+            apply();
         }
 
-        function zoom(amt) {
-            currentScale += amt;
-            update();
+        function zoom(amt) { scale += amt; apply(); }
+        function apply() {
+            document.getElementById('zoom-layer').style.transform = "scale(" + scale + ")";
+            document.getElementById('zVal').innerText = Math.round(scale * 100) + "%";
         }
 
-        function update() {
-            layer.style.transform = "scale(" + currentScale + ")";
-            document.getElementById('zoomVal').innerText = Math.round(currentScale * 100) + "%";
+        function nextPage() { if(currentPage < totalPages-1) switchPage(currentPage+1); else alert('جاري تجهيز الدروس الجديدة...'); }
+        function prevPage() { if(currentPage > 0) switchPage(currentPage-1); }
+
+        function switchPage(index) {
+            document.getElementById('p' + currentPage).classList.remove('active');
+            currentPage = index;
+            document.getElementById('p' + currentPage).classList.add('active');
         }
 
         window.onload = autoFit;
