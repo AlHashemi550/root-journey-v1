@@ -6,121 +6,124 @@
     <title>رحلة Root - أبو يزن الهاشمي</title>
     <style>
         :root { --main-gold: #c0a060; --main-maroon: #800040; --bg-black: #050505; }
-        body { background-color: var(--bg-black); color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; scroll-behavior: smooth; line-height: 1.6; overflow-x: hidden; }
-        
+        body { background-color: var(--bg-black); color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; scroll-behavior: smooth; line-height: 1.6; }
         .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle, #1a000d 0%, #000 100%); text-align: center; border-bottom: 3px solid var(--main-maroon); padding: 20px; box-sizing: border-box; }
         .logo-img { width: 140px; filter: drop-shadow(0 0 15px var(--main-maroon)); margin-bottom: 20px; }
         .hero h1 { font-size: 2.8em; color: var(--main-maroon); margin: 0; text-shadow: 0 0 20px var(--main-maroon); }
         .author-info { color: var(--main-gold); margin-top: 20px; font-weight: bold; }
         .start-btn { display: inline-block; padding: 12px 30px; background-color: var(--main-gold); color: #1a000d; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 30px; }
-
-        .container { max-width: 100%; margin: 0 auto; padding: 40px 15px; box-sizing: border-box; }
-        .index-box { background: #111; border: 1px solid var(--main-maroon); padding: 20px; border-radius: 15px; margin-bottom: 40px; }
-        .index-box a { color: #fff; text-decoration: none; display: block; margin: 10px 0; font-size: 1em; border-bottom: 1px solid #222; padding-bottom: 5px; }
-
-        .lesson-card { background: white; color: #333; padding: 25px; border-radius: 15px; margin-bottom: 40px; border-right: 10px solid var(--main-maroon); box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; box-sizing: border-box; text-align: right; }
-        h2 { color: var(--main-maroon); font-size: 1.6em; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
-        h3 { color: var(--main-maroon); font-size: 1.3em; margin-top: 25px; border-right: 4px solid var(--main-gold); padding-right: 10px; }
-
-        .table-container { width: 100%; overflow-x: auto; margin: 20px 0; border-radius: 8px; border: 1px solid #ddd; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 15px; }
+        .lesson-card { background: white; color: #333; padding: 25px; border-radius: 15px; margin-bottom: 40px; border-right: 10px solid var(--main-maroon); box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: right; }
+        h2 { color: var(--main-maroon); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        h3 { color: var(--main-maroon); margin-top: 20px; border-right: 4px solid var(--main-gold); padding-right: 10px; }
+        .table-container { width: 100%; overflow-x: auto; margin: 20px 0; }
         table { width: 100%; border-collapse: collapse; min-width: 500px; }
         th { background: var(--main-maroon); color: white; padding: 12px; }
-        td { padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold; font-size: 0.9em; }
-
-        .highlight-box { background: #fff0f5; border-right: 6px solid var(--main-maroon); padding: 20px; margin: 20px 0; border-radius: 8px; color: #333; }
+        td { padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold; }
+        .highlight-box { background: #fff0f5; border-right: 6px solid var(--main-maroon); padding: 15px; margin: 15px 0; border-radius: 8px; }
         .cmd-box { background: #222; color: #0f0; padding: 15px; border-radius: 5px; font-family: monospace; direction: ltr; text-align: left; margin: 10px 0; overflow-x: auto; }
-        
         .page-tag { display: inline-block; background: var(--main-gold); color: #000; padding: 2px 10px; border-radius: 5px; font-size: 0.8em; margin-bottom: 10px; font-weight: bold; }
         .footer { text-align: center; padding: 40px; color: #555; font-size: 0.8em; }
     </style>
 </head>
 <body>
-
     <div class="hero">
         <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" class="logo-img">
         <h1>رحلة Root</h1>
-        <p>من الصفر حتى الاحتراف في الأمن السيبراني</p>
         <div class="author-info">إعداد: أبو يزن الهاشمي</div>
-        <a href="#index" class="start-btn">تصفح محتوى الكتاب</a>
+        <a href="#lessons" class="start-btn">ابدأ القراءة</a>
     </div>
 
-    <div class="container" id="index">
-        <div class="index-box">
-            <h3 style="color:var(--main-gold); margin:0 0 15px 0;">فهرس الدروس:</h3>
-            <a href="#lesson1">1. لغة الآلة ونظام Binary</a>
-            <a href="#lesson2">2. أساسيات الشبكات</a>
-            <a href="#lesson3">3. الأمن والتشفير</a>
-            <a href="#lesson4">4. أنواع الهجوم والحماية</a>
-            <a href="#lesson5">5. مفاهيم أمنية متقدمة</a>
-            <a href="#lesson6p1">6. الصلاحيات وأنظمة التشغيل (الجزء 1)</a>
-            <a href="#lesson6p2">6. أوامر الفحص والتحكم (الجزء 2)</a>
-        </div>
-
-        <div class="lesson-card" id="lesson1"><h2>الدرس الأول: لغة الآلة</h2><p>تم شرح نظام Binary ومضاعفات الرقم 2.</p></div>
-        <div class="lesson-card" id="lesson2"><h2>الدرس الثاني: أساسيات الشبكات</h2><p>شرح مصطلحات IP, DNS, Ports, Firewall.</p></div>
-        <div class="lesson-card" id="lesson3"><h2>الدرس الثالث: الأمن والتشفير</h2><p>شرح HTTPS, VPN والهاش.</p></div>
-        <div class="lesson-card" id="lesson4"><h2>الدرس الرابع: أنواع الهجوم</h2><p>شرح SQL Injection, Brute Force, Phishing.</p></div>
-        <div class="lesson-card" id="lesson5"><h2>الدرس الخامس: مفاهيم أمنية</h2><p>شرح قواعد الحماية الأساسية وفلترة المدخلات.</p></div>
-
-        <div class="lesson-card" id="lesson6p1">
-            <div class="page-tag">الدرس السادس - صفحة 1</div>
-            <h2>الدرس السادس: الصلاحيات ومعركة الثغرات</h2>
-            <p>بعد تجاوز الشبكة، تأتي معركة <b>الصلاحيات (Permissions)</b>؛ وهي التي تحدد من يملك التحكم ومن يبقى خارجاً.</p>
-            
-            <h3>1. دخول النظام (The Entry)</h3>
-            <p>يبحث المخترق عن المنافذ (Ports) غير المحمية مثل:</p>
-            <ul>
-                <li><b>FTP (21):</b> لنقل الملفات.</li>
-                <li><b>SSH (22):</b> للتحكم عن بعد.</li>
-            </ul>
-
-            <h3>2. رفع الصلاحيات (Privilege Escalation)</h3>
-            <p>يسعى المخترق للتحول من "مستخدم عادي" إلى <b>Root</b> (في Linux) أو <b>Admin</b> (في Windows) للسيطرة الكاملة.</p>
-
-            <h3>3. صلاحيات الملفات (RWX)</h3>
+    <div class="container" id="lessons">
+        <div class="lesson-card">
+            <h2>الدرس الأول: لغة الآلة (Binary System)</h2>
+            <p>الحاسوب لا يفهم الحروف بل يفهم (0) و (1) فقط.</p>
             <div class="table-container">
                 <table>
-                    <tr><th>الرمز</th><th>المعنى</th><th>الوظيفة</th></tr>
-                    <tr><td>(R) Read</td><td>قراءة</td><td>عرض محتوى الملفات.</td></tr>
-                    <tr><td>(W) Write</td><td>كتابة</td><td>تعديل أو حذف الملفات.</td></tr>
-                    <tr><td>(X) Execute</td><td>تنفيذ</td><td>تشغيل الأكواد والبرامج.</td></tr>
+                    <tr><th>القيمة</th><th>8</th><th>4</th><th>2</th><th>1</th></tr>
+                    <tr><td>الاستخدام</td><td>نعم (1)</td><td>لا (0)</td><td>نعم (1)</td><td>لا (0)</td></tr>
+                </table>
+            </div>
+            <p>التحليل النهائي للرقم عشرة هو: (1010).</p>
+        </div>
+
+        <div class="lesson-card">
+            <h2>الدرس الثاني: مفهوم أساسيات الشبكات</h2>
+            <div class="table-container">
+                <table>
+                    <tr><th>المصطلح</th><th>الوظيفة</th><th>مثال توضيحي</th></tr>
+                    <tr><td>IP Address</td><td>عنوان الموقع</td><td>مثل عنوان منزلك</td></tr>
+                    <tr><td>DNS</td><td>يحول الأسماء لأرقام</td><td>مثل سجل الهاتف</td></tr>
+                    <tr><td>Ports</td><td>منافذ الطلبات</td><td>فتحات في جدار البيت</td></tr>
                 </table>
             </div>
         </div>
 
-        <div class="lesson-card" id="lesson6p2">
-            <div class="page-tag">الدرس السادس - صفحة 2</div>
-            <h2>تابع الدرس السادس: ميكانيكا الفحص والاختراق</h2>
-            
-            <h3>| طبقات النظام</h3>
-            <p>ينقسم النظام لطبقتين: <b>User Space</b> و <b>Kernel Space</b> (قلب النظام). السيطرة على الـ Kernel تعني السيطرة على الجهاز بالكامل.</p>
+        <div class="lesson-card">
+            <h2>الدرس الثالث: أمن الشبكة والتشفير</h2>
+            <h3>التشفير المتماثل (Symmetric):</h3>
+            <p>مفتاح واحد للقفل والفتح (سريع جداً).</p>
+            <h3>التشفير غير المتماثل (Asymmetric):</h3>
+            <p>مفتاح عام (Public) للقفل، ومفتاح خاص (Private) للفتح.</p>
+            <div class="highlight-box"><b>Hashing:</b> عملية "طحن" البيانات لضمان عدم تغييرها، وهي باتجاه واحد فقط.</div>
+        </div>
 
-            <h3>| أوامر الفحص في Linux</h3>
-            <div class="cmd-box">
-                # معرفة إصدار النظام<br>
-                uname -a<br><br>
-                # معرفة المستخدم الحالي وصلاحياته<br>
-                id<br><br>
-                # عرض الملفات وصلاحيات الـ RWX<br>
-                ls -la
-            </div>
-
-            <h3>| أوامر الفحص في Windows</h3>
-            <div class="cmd-box">
-                # عرض العمليات النشطة (Process List)<br>
-                tasklist<br><br>
-                # إغلاق برنامج بالقوة (Kill)<br>
-                taskkill /F /PID [رقم العملية]<br>
-                # ملاحظة: إذا رفض النظام، فأنت لا تملك صلاحية Admin!
-            </div>
-            
-            <div class="highlight-box" style="background:#e3f2fd; border-right-color:#0d47a1;">
-                <b>نصيحة تقنية:</b> من يملك الـ <b>Root</b> يملك كل شيء. تأكد دائماً من تشفير "المفتاح الخاص" ووضعه في مكان آمن داخل النظام.
+        <div class="lesson-card">
+            <h2>الدرس الرابع: أنواع الهجوم والحماية</h2>
+            <div class="table-container">
+                <table>
+                    <tr><th>الهجمة</th><th>الشرح</th><th>الحل</th></tr>
+                    <tr><td>SQL Injection</td><td>خداع قاعدة البيانات</td><td>فلترة المدخلات</td></tr>
+                    <tr><td>Phishing</td><td>رسائل مزورة</td><td>الوعي وعدم الضغط على الروابط</td></tr>
+                </table>
             </div>
         </div>
 
-    </div>
+        <div class="lesson-card">
+            <div class="page-tag">الدرس الخامس</div>
+            <h2>الدرس الخامس: مفاهيم أمنية متقدمة</h2>
+            <p>هنا نركز على حماية المواقع والتطبيقات من الثغرات البرمجية.</p>
+            <div class="table-container">
+                <table>
+                    <tr><th>الهجمة</th><th>الشرح</th><th>الحل</th></tr>
+                    <tr><td>XSS</td><td>وضع كود خبيث في صفحات الويب لتصميم المدخلات.</td><td>تشفير البيانات ومنع الأكواد غير المصرح بها.</td></tr>
+                </table>
+            </div>
+            <h3>| أهم قواعد الحماية:</h3>
+            <ul>
+                <li>أغلق الأبواب (Ports) التي لا تحتاجها.</li>
+                <li>تغليف البيانات بتشفير قوي (مثل HTTPS).</li>
+                <li><b>قاعدة الصلاحيات:</b> لا تترك أي برنامج يعمل بصفة مدير إلا للضرورة القصوى.</li>
+            </ul>
+        </div>
 
+        <div class="lesson-card">
+            <div class="page-tag">الدرس السادس - صفحة 1</div>
+            <h2>الدرس السادس: الصلاحيات ومعركة الثغرات</h2>
+            <p>من هنا تبدأ معركة التحكم؛ الصلاحيات (Permissions) هي التي تحدد من يملك المفاتيح.</p>
+            <h3>صلاحيات الملفات الكبرى (RWX):</h3>
+            <ul>
+                <li><b>(R) Read:</b> عرض محتوى الملفات.</li>
+                <li><b>(W) Write:</b> تعديل المحتوى.</li>
+                <li><b>(X) Execute:</b> تشغيل البرامج.</li>
+            </ul>
+        </div>
+
+        <div class="lesson-card">
+            <div class="page-tag">الدرس السادس - صفحة 2</div>
+            <h2>تابع الدرس السادس: فحص الأنظمة</h2>
+            <h3>| فحص الهاتف عبر Termux:</h3>
+            <div class="cmd-box">
+                uname -a # معرفة إصدار النواة<br>
+                ps -ef   # عرض العمليات<br>
+                top      # مراقبة الأداء
+            </div>
+            <h3>| فحص الكمبيوتر (Windows):</h3>
+            <div class="cmd-box">
+                kill -9 [PID] # أمر إغلاق العملية المشبوهة فوراً
+            </div>
+        </div>
+    </div>
     <div class="footer">جميع الحقوق محفوظة © أبو يزن الهاشمي - رحلة Root 2026</div>
 </body>
 </html>
