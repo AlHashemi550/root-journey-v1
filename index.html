@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كتاب رحلة Root - أبو يزن الهاشمي</title>
+    <title>كتاب رحلة Root - المطور</title>
     <style>
-        :root { --gold: #c0a060; --maroon: #800040; --bg: #0a0a0a; --paper: #fdfaf3; }
+        :root { --gold: #c0a060; --maroon: #600000; --bg: #050505; --paper: #f9f4e8; }
         
         body { 
             background-color: var(--bg); margin: 0; padding: 0; 
@@ -14,195 +14,116 @@
         }
 
         /* شريط التحكم */
-        .controls {
+        .header-tools {
             position: fixed; top: 0; width: 100%; height: 60px;
             background: #111; display: flex; justify-content: center; align-items: center;
-            gap: 15px; z-index: 1000; border-bottom: 2px solid var(--gold);
+            gap: 20px; z-index: 10000; border-bottom: 2px solid var(--gold);
         }
-        .btn { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .zoom-btn { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
 
-        /* حاوية الصفحات - نظام الختمة */
-        #book-viewport {
+        /* منطقة الكتاب */
+        #viewport {
             flex: 1; display: flex; align-items: center; justify-content: center;
-            perspective: 2000px; padding: 20px; margin-top: 60px;
+            margin-top: 60px; perspective: 2500px; padding: 20px;
         }
 
-        #book-zoom-layer {
-            transition: transform 0.3s ease; transform-origin: center;
-            width: 100%; display: flex; justify-content: center;
+        #zoom-layer {
+            transition: transform 0.3s ease-out; transform-origin: center center;
+            width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;
         }
 
-        .pages-container {
-            width: 900px; height: 85vh; position: relative;
-            transform-style: preserve-3d;
+        .book-frame {
+            width: 100%; max-width: 900px; height: 90vh;
+            position: relative; box-shadow: 0 0 100px rgba(0,0,0,0.9);
         }
 
+        /* تصميم الصفحة الحقيقي */
         .page {
-            background: var(--paper); color: #333;
+            background: var(--paper); color: #222;
             width: 100%; height: 100%; position: absolute;
-            top: 0; left: 0; padding: 50px; box-sizing: border-box;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            border-right: 15px solid var(--maroon); border-radius: 5px;
-            display: none; /* سيتم التحكم بالعرض عبر JavaScript */
+            top: 0; left: 0; padding: 60px; box-sizing: border-box;
+            display: none; border-radius: 5px;
+            border-right: 18px solid var(--maroon);
+            box-shadow: inset 50px 0 50px -50px rgba(0,0,0,0.2); 
             overflow-y: auto;
         }
 
-        .page.active { display: block; animation: flipIn 0.5s ease-out; }
+        .page.active { display: block; }
 
-        @keyframes flipIn {
-            from { transform: rotateY(-20deg); opacity: 0; }
-            to { transform: rotateY(0deg); opacity: 1; }
-        }
-
-        /* تنسيق المحتوى داخل الصفحة */
-        h1 { color: #e91e63; font-size: 3.5em; text-align: center; }
-        h2 { color: var(--maroon); border-bottom: 3px solid var(--gold); padding-bottom: 10px; text-align: center; }
-        
-        .table-box { width: 100%; margin: 25px 0; border: 1px solid #ddd; }
+        /* تنسيق النصوص والجداول الموحد */
+        h2 { color: var(--maroon); border-bottom: 3px solid var(--gold); padding-bottom: 10px; text-align: center; font-size: 2.2em; }
+        .table-wrap { width: 100%; margin: 30px 0; border: 1px solid #ccc; border-radius: 5px; overflow: hidden; }
         table { width: 100%; border-collapse: collapse; background: #fff; }
-        th { background: var(--maroon); color: white; padding: 12px; }
-        td { padding: 12px; border: 1px solid #eee; text-align: center; font-weight: bold; }
+        th { background: var(--maroon); color: white; padding: 15px; }
+        td { padding: 15px; border: 1px solid #eee; text-align: center; font-weight: bold; }
 
-        .cmd-box { background: #1a1a1a; color: #00ff00; padding: 20px; border-radius: 5px; direction: ltr; text-align: left; font-family: monospace; }
-        .info-box { background: #fff9c4; border-right: 6px solid #fbc02d; padding: 15px; margin: 15px 0; font-weight: bold; }
-
-        .nav-btns { position: fixed; bottom: 20px; display: flex; gap: 50px; z-index: 1000; }
-        .nav-btn { background: var(--maroon); color: white; border: 2px solid var(--gold); padding: 10px 30px; border-radius: 50px; cursor: pointer; }
+        /* أزرار التنقل */
+        .nav-bar {
+            position: fixed; bottom: 20px; width: 100%;
+            display: flex; justify-content: center; gap: 40px; z-index: 1000;
+        }
+        .nav-btn {
+            background: var(--maroon); color: white; border: 2px solid var(--gold);
+            padding: 12px 35px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.1em;
+        }
     </style>
 </head>
 <body>
 
-    <div class="controls">
-        <button class="btn" onclick="zoom(0.1)">تكبير +</button>
-        <button class="btn" onclick="zoom(-0.1)">تصغير -</button>
-        <button class="btn" style="background:#fff" onclick="resetZ()">إعادة</button>
+    <div class="header-tools">
+        <button class="zoom-btn" onclick="handleZoom(0.15)">تكبير +</button>
+        <span id="zVal" style="color:var(--gold); font-weight:bold;">100%</span>
+        <button class="zoom-btn" onclick="handleZoom(-0.15)">تصغير -</button>
+        <button class="zoom-btn" style="background:#fff" onclick="resetZoom()">إعادة</button>
     </div>
 
-    <div id="book-viewport">
-        <div id="book-zoom-layer">
-            <div class="pages-container" id="pages">
+    <div id="viewport">
+        <div id="zoom-layer">
+            <div class="book-frame" id="book-frame">
                 
-                <div class="page active" style="background:#000; color:#fff; border:3px solid var(--gold); text-align:center;">
-                    <div style="margin-top:100px;">
-                        <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" style="width:150px;">
-                        <h1>رحلة Root</h1>
-                        <p style="font-size:1.5em;">من الصفر حتى الاحتراف</p>
-                        <p style="color:var(--gold)">إعداد: أبو يزن الهاشمي</p>
-                        <div style="margin-top:50px; border:1px solid var(--gold); display:inline-block; padding:15px 40px; border-radius:50px;">ابدأ الرحلة</div>
-                    </div>
+                <div class="page active" style="background:#000; color:#fff; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                    <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" style="width:180px; margin-bottom:20px;">
+                    <h1 style="color:#e91e63; font-size:4em;">رحلة Root</h1>
+                    <p style="font-size:1.5em; color:var(--gold);">إصدار 2026 المطور</p>
+                    <p>إعداد: أبو يزن الهاشمي</p>
                 </div>
 
-                <div class="page">
-                    <h2>الدرس الأول: لغة الآلة</h2>
-                    <p>الحاسوب لا يفهم الحروف بل يفهم (0 و 1). نظام الـ Binary هو المبدأ الأساسي.</p>
-                    <div class="table-box">
-                        <table>
-                            <tr><th>القيمة</th><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr>
-                            <tr><td>الرقم (10)</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
-                        </table>
-                    </div>
-                    <div class="info-box">التحليل النهائي لرقم (10) هو: 1010. تذكر أن 8 بت = 1 بايت.</div>
                 </div>
-
-                <div class="page">
-                    <h2>الدرس الثاني: أساسيات الشبكات</h2>
-                    <p>المستلزمات الضرورية لعمل الشبكة:</p>
-                    <div class="table-box">
-                        <table>
-                            <tr><th>المصطلح</th><th>الوصف</th><th>المثال</th></tr>
-                            <tr><td>IP Address</td><td>عنوان الجهاز الفريد</td><td>مثل عنوان منزلك</td></tr>
-                            <tr><td>DNS</td><td>محول الأسماء لأرقام</td><td>دليل الهاتف العالمي</td></tr>
-                            <tr><td>Ports</td><td>منافذ الطلبات</td><td>فتحات في جدار البيت</td></tr>
-                            <tr><td>Firewall</td><td>الحارس الشخصي</td><td>يقرر من يدخل ومن يخرج</td></tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="page">
-                    <h2>الدرس الثالث: الأمن والتشفير</h2>
-                    <div class="info-box" style="background:#ffebee;">القاعدة الذهبية: أي رسالة تخرج من جهازك مرقبة ما لم تكن مشفرة.</div>
-                    <h3>| أنواع التشفير:</h3>
-                    <ul>
-                        <li><b>Symmetric:</b> مفتاح واحد (مثل مفتاح البيت).</li>
-                        <li><b>Asymmetric:</b> مفتاح عام للقفل وخاص للفتح.</li>
-                        <li><b>Hashing:</b> دالة اتجاه واحد لحماية كلمات السر.</li>
-                    </ul>
-                </div>
-
-                <div class="page">
-                    <h2>الدرس الخامس: الصلاحيات (RWX)</h2>
-                    <div class="info-box">المخترق يسعى دائماً لرفع الصلاحيات (Privilege Escalation) للوصول للـ Root.</div>
-                    <div class="table-box">
-                        <table>
-                            <tr><th>الصلاحية</th><th>الرمز</th><th>الخطر</th></tr>
-                            <tr><td>قراءة</td><td>R</td><td>تسريب البيانات</td></tr>
-                            <tr><td>كتابة</td><td>W</td><td>تشفير الملفات (فدية)</td></tr>
-                            <tr><td>تنفيذ</td><td>X</td><td>زرع أبواب خلفية</td></tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="page">
-                    <h2>الدرس السادس: فحص الهاتف (Termux)</h2>
-                    <div class="cmd-box">
-                        # فحص النواة (Kernel)<br>uname -a<br><br>
-                        # فحص العمليات المشبوهة<br>ps -ef<br><br>
-                        # قتل العملية (بصلاحيات عالية)<br>kill -9 [PID]
-                    </div>
-                    <p>إذا ظهرت رسالة Operation not permitted عند أمر القتل، فهذا يعني أن المخترق يملك صلاحيات أعلى منك.</p>
-                </div>
-
-            </div>
         </div>
     </div>
 
-    <div class="nav-btns">
-        <button class="nav-btn" onclick="prevPage()">السابق</button>
-        <button class="nav-btn" onclick="nextPage()">التالي</button>
+    <div class="nav-bar">
+        <button class="nav-btn" onclick="changePage(-1)">السابق</button>
+        <button class="nav-btn" onclick="changePage(1)">التالي</button>
     </div>
 
     <script>
-        let currentIndex = 0;
+        let currentIdx = 0;
         const pages = document.querySelectorAll('.page');
-        let currentZoom = 1.0;
+        let zoomLevel = 1.0;
 
-        function showPage(index) {
-            pages.forEach(p => p.classList.remove('active'));
-            pages[index].classList.add('active');
-        }
-
-        function nextPage() {
-            if (currentIndex < pages.length - 1) {
-                currentIndex++;
-                showPage(currentIndex);
+        function changePage(step) {
+            const nextIdx = currentIdx + step;
+            if (nextIdx >= 0 && nextIdx < pages.length) {
+                pages[currentIdx].classList.remove('active');
+                currentIdx = nextIdx;
+                pages[currentIdx].classList.add('active');
+                pages[currentIdx].scrollTop = 0;
             }
         }
 
-        function prevPage() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                showPage(currentIndex);
-            }
+        function handleZoom(val) {
+            zoomLevel += val;
+            if (zoomLevel < 0.5) zoomLevel = 0.5;
+            document.getElementById('zoom-layer').style.transform = "scale(" + zoomLevel + ")";
+            document.getElementById('zVal').innerText = Math.round(zoomLevel * 100) + "%";
         }
 
-        function zoom(val) {
-            currentZoom += val;
-            document.getElementById('book-zoom-layer').style.transform = "scale(" + currentZoom + ")";
+        function resetZoom() {
+            zoomLevel = 1.0;
+            document.getElementById('zoom-layer').style.transform = "scale(1)";
+            document.getElementById('zVal').innerText = "100%";
         }
-
-        function resetZ() {
-            currentZoom = 1.0;
-            document.getElementById('book-zoom-layer').style.transform = "scale(1)";
-        }
-
-        // دعم السحب بالإصبع
-        let touchStartX = 0;
-        document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
-        document.addEventListener('touchend', e => {
-            let touchEndX = e.changedTouches[0].clientX;
-            if (touchStartX - touchEndX > 50) nextPage();
-            if (touchEndX - touchStartX > 50) prevPage();
-        });
     </script>
 </body>
 </html>
