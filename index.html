@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رحلة Root - الدرس الأول المطور</title>
+    <title>رحلة Root - الدرس الأول المعدل</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -16,15 +16,22 @@
         .book-container { width: 95vw; max-width: 800px; height: 85vh; position: relative; }
         .page { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none; padding: 35px; box-sizing: border-box; border-radius: 15px; border: 4px solid var(--gold); overflow-y: auto; text-align: right; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
         .page.active { display: block; }
+        
+        /* الغلاف: خط الرقعة */
         .cover-page { background: #000; color: #fff; text-align: center; font-family: 'Aref Ruqaa', serif; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .cover-page.active { display: flex; }
+        
+        /* الدروس: خط النسخ */
         .lesson-page { background: var(--paper); color: #000; font-family: 'IBM Plex Sans Arabic', sans-serif; line-height: 1.8; }
         .lesson-title { color: var(--maroon); border-bottom: 3px solid var(--maroon); padding-bottom: 10px; font-size: 1.8em; font-weight: 700; margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: #fff; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #fff; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: center; font-weight: bold; }
         th { background: var(--maroon); color: #fff; }
+        
+        .highlight-box { background: #fff3e0; border-right: 5px solid #ff9800; padding: 15px; margin: 20px 0; border-radius: 4px; }
         .nav-dock { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 40px; z-index: 1000; }
-        .nav-link { background: var(--maroon); color: #fff; border: 2px solid var(--gold); padding: 10px 40px; border-radius: 50px; cursor: pointer; font-size: 1.1em; }
+        .nav-link { background: var(--maroon); color: #fff; border: 2px solid var(--gold); padding: 10px 40px; border-radius: 50px; cursor: pointer; font-size: 1.1em; font-family: 'IBM Plex Sans Arabic', sans-serif; }
     </style>
 </head>
 <body>
@@ -40,10 +47,10 @@
             <div class="book-container">
                 
                 <div class="page cover-page active" id="p0">
-                    <i class="bi bi-cpu" style="font-size: 100px; color: var(--pink);"></i>
+                    <i class="bi bi-shield-lock" style="font-size: 100px; color: var(--pink);"></i>
                     <h1 style="font-size: 4em; color: var(--pink); margin: 10px 0;">رحلة Root</h1>
-                    <p style="font-size: 1.6em; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 10px;">من الصفر حتى الاحتراف في الأمن السيبراني</p>
-                    <div style="margin-top: 30px; font-size: 1.2em; color: var(--gold);">إعداد: أبو يزن الهاشمي</div>
+                    <p style="font-size: 1.8em; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 10px;">من الصفر حتى الاحتراف في الأمن السيبراني</p>
+                    <div style="margin-top: 40px; font-size: 1.3em; color: var(--gold);">إعداد المبرمج: أبو يزن الهاشمي</div>
                 </div>
 
                 <div class="page lesson-page" id="p1">
@@ -54,34 +61,50 @@
                     <p>المجموعة تتكون من 6 خانات خلينا نستخدم 4 في تحليل رقم عشره بلغه الحاسوب معك 1،2،4،8 نكتب الرقم 10 كالتالي:</p>
                     
                     <table>
-                        <tr style="background:#f0f0f0;">
-                            <th>الخانة</th>
+                        <tr>
+                            <th>المجموعة (المضاعفات)</th>
                             <td>8</td>
                             <td>4</td>
                             <td>2</td>
                             <td>1</td>
                         </tr>
                         <tr>
-                            <th>الاستخدام</th>
-                            <td>نعم (1)</td>
-                            <td>لا (0)</td>
-                            <td>نعم (1)</td>
-                            <td>لا (0)</td>
+                            <th>هل نحتاجه؟</th>
+                            <td>نعم</td>
+                            <td>لا</td>
+                            <td>نعم</td>
+                            <td>لا</td>
+                        </tr>
+                        <tr style="background:#f9f9f9;">
+                            <th>لغة الحاسوب</th>
+                            <td style="color:red; font-size:1.2em;">1</td>
+                            <td style="color:red; font-size:1.2em;">0</td>
+                            <td style="color:red; font-size:1.2em;">1</td>
+                            <td style="color:red; font-size:1.2em;">0</td>
                         </tr>
                     </table>
 
                     <p>الرقم الذي نستخدمه من المجموعة نكتبه (1 والرقم الذي لا نستخدمه نكتبه برقم 0)</p>
-                    <p>يعني (ثمانيه نحتاجها؟ نعم نكتبها 1)</p>
-                    <p>اربعه نستخدمها؟ لا نكتبها برقم 0</p>
-                    <p>كذلك 2 هل نستخدمه؟ نعم نكتبه برقم 1</p>
-                    <p>كذلك 1 نستخدمه؟ لا نعد نحتاجه فنكتبه برقم 0</p>
-                    <p style="background: #fff3e0; padding: 15px; border-right: 5px solid #ff9800; font-weight: bold;">اذا رقم 10 يكتب بلغه الحاسوب (1010)</p>
+                    <ul>
+                        <li>يعني (ثمانيه نحتاجها؟ نعم نكتبها 1)</li>
+                        <li>اربعه نستخدمها؟ لا نكتبها برقم 0</li>
+                        <li>كذلك 2 هل نستخدمه؟ نعم نكتبه برقم 1</li>
+                        <li>كذلك 1 نستخدمه؟ لا نعد نحتاجه فنكتبه برقم 0</li>
+                    </ul>
+                    <div class="highlight-box">اذا رقم 10 يكتب بلغه الحاسوب (1010)</div>
+
+                    <h3 style="color:var(--maroon);">البت والبايت:</h3>
+                    <ul style="list-style: square;">
+                        <li><strong>البت (Bit):</strong> أصغر وحدة رقمية (0 أو 1).</li>
+                        <li><strong>البايت (Byte):</strong> مجموعة من 8 بت.</li>
+                        <li><strong>مثال:</strong> صورة بحجم 1MB تتكون من 8 مليون مفتاح مرصوصة بجانب بعضها.</li>
+                    </ul>
                 </div>
 
                 <div class="page lesson-page" id="p2">
                     <h2 class="lesson-title">الدرس الثاني: أساسيات الشبكات</h2>
-                    <p>الشبكات هي وسيلة تنقل معلومات بين هذا العالم...</p>
-                    </div>
+                    <p>سيتم إدراج محتوى الدرس الثاني كاملاً هنا بناءً على الصور السابقة...</p>
+                </div>
 
             </div>
         </div>
@@ -103,6 +126,7 @@
                 document.getElementById('p'+cur).classList.remove('active');
                 cur = n;
                 document.getElementById('p'+cur).classList.add('active');
+                document.querySelector('.book-container').scrollTo(0,0);
             }
         }
         window.onload = autoFit; window.onresize = autoFit;
