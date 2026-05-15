@@ -6,213 +6,109 @@
     <title>رحلة Root - أبو يزن الهاشمي</title>
     <style>
         :root { --main-gold: #c0a060; --main-maroon: #800040; --bg-black: #050505; }
-        body { background-color: var(--bg-black); color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; scroll-behavior: smooth; line-height: 1.6; }
+        body { background-color: var(--bg-black); color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; scroll-behavior: smooth; line-height: 1.6; overflow-x: hidden; }
         
-        /* قسم الغلاف */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle, #1a000d 0%, #000 100%); text-align: center; border-bottom: 3px solid var(--main-maroon); }
-        .logo-img { width: 180px; filter: drop-shadow(0 0 15px var(--main-maroon)); margin-bottom: 25px; }
-        .hero h1 { font-size: 3.8em; color: var(--main-maroon); margin: 0; text-shadow: 0 0 20px var(--main-maroon); font-weight: bold; }
-        .hero p { font-size: 1.4em; color: #ccc; margin: 10px 0 35px 0; font-weight: 300; }
-        .author-info { font-size: 1.1em; color: var(--main-gold); margin-top: 30px; font-weight: bold; }
-        .start-btn { display: inline-block; padding: 15px 40px; background-color: var(--main-gold); color: #1a000d; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.2em; transition: 0.3s; margin-top: 40px; }
-        .start-btn:hover { transform: scale(1.05); background-color: #e0c080; }
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle, #1a000d 0%, #000 100%); text-align: center; border-bottom: 3px solid var(--main-maroon); padding: 20px; box-sizing: border-box; }
+        .logo-img { width: 140px; filter: drop-shadow(0 0 15px var(--main-maroon)); margin-bottom: 20px; }
+        .hero h1 { font-size: 2.8em; color: var(--main-maroon); margin: 0; text-shadow: 0 0 20px var(--main-maroon); }
+        .hero p { font-size: 1.1em; color: #ccc; margin: 10px 0; }
+        .author-info { color: var(--main-gold); margin-top: 20px; font-weight: bold; }
+        .start-btn { display: inline-block; padding: 12px 30px; background-color: var(--main-gold); color: #1a000d; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 30px; }
 
-        /* حاوية المحتوى */
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
-        .index-box { background: #111; border: 1px solid var(--main-maroon); padding: 25px; border-radius: 15px; margin-bottom: 60px; box-shadow: 0 0 20px rgba(128,0,64,0.2); }
-        .index-box h3 { color: var(--main-gold); border-bottom: 2px solid #333; padding-bottom: 12px; margin-top: 0; }
-        .index-box ul { list-style: none; padding: 0; }
-        .index-box li { margin: 12px 0; border-bottom: 1px dashed #222; padding-bottom: 8px; }
-        .index-box a { color: #fff; text-decoration: none; font-size: 1.1em; transition: 0.3s; display: block; }
-        .index-box a:hover { color: var(--main-gold); padding-right: 15px; }
+        .container { max-width: 100%; margin: 0 auto; padding: 40px 15px; box-sizing: border-box; }
+        .index-box { background: #111; border: 1px solid var(--main-maroon); padding: 20px; border-radius: 15px; margin-bottom: 40px; }
+        .index-box a { color: #fff; text-decoration: none; display: block; margin: 10px 0; font-size: 1em; border-bottom: 1px solid #222; padding-bottom: 5px; }
 
-        /* تنسيق كروت الدروس التفصيلية */
-        .lesson-card { background: white; color: #333; padding: 40px; border-radius: 20px; margin-bottom: 60px; border-right: 12px solid var(--main-maroon); box-shadow: 0 20px 50px rgba(0,0,0,0.7); text-align: right; }
-        h2 { color: var(--main-maroon); border-bottom: 3px solid #f0e6ea; padding-bottom: 15px; margin-top: 0; font-size: 1.8em; }
-        h3 { color: var(--main-maroon); margin-top: 25px; border-right: 4px solid var(--main-gold); padding-right: 10px; }
-        
-        /* الجداول التفصيلية */
-        .table-container { overflow-x: auto; margin: 25px 0; }
-        table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        th { background: var(--main-maroon); color: white; padding: 15px; border: 1px solid #ddd; text-align: center; }
-        td { padding: 15px; border: 1px solid #ddd; text-align: center; font-weight: bold; }
-        .bg-gray { background: #f9f9f9; width: 30%; }
+        .lesson-card { background: white; color: #333; padding: 20px; border-radius: 15px; margin-bottom: 40px; border-right: 8px solid var(--main-maroon); box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; box-sizing: border-box; }
+        h2 { color: var(--main-maroon); font-size: 1.5em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        h3 { color: var(--main-maroon); font-size: 1.2em; margin-top: 20px; }
 
-        /* الصناديق التوضيحية */
-        .highlight-box { background: #fff0f5; border-right: 6px solid var(--main-maroon); padding: 25px; margin: 25px 0; border-radius: 10px; color: #222; }
-        .info-box { background: #e3f2fd; border-right: 6px solid #0d47a1; padding: 20px; border-radius: 10px; margin: 20px 0; color: #0d47a1; }
-        
-        ul.lesson-list { padding-right: 25px; }
-        ul.lesson-list li { margin-bottom: 10px; }
+        /* حل مشكلة الجداول المقصوصة */
+        .table-container { width: 100%; overflow-x: auto; margin: 20px 0; -webkit-overflow-scrolling: touch; border: 1px solid #ddd; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: var(--main-maroon); color: white; padding: 12px; font-size: 0.9em; }
+        td { padding: 12px; border: 1px solid #ddd; text-align: center; font-size: 0.85em; font-weight: bold; }
 
-        .footer { text-align: center; padding: 50px; color: #666; border-top: 1px solid #222; }
+        .highlight-box { background: #fff0f5; border-right: 5px solid var(--main-maroon); padding: 15px; margin: 20px 0; border-radius: 8px; font-size: 0.9em; }
+        .footer { text-align: center; padding: 30px; color: #555; font-size: 0.8em; }
     </style>
 </head>
 <body>
 
     <div class="hero">
-        <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" alt="Logo" class="logo-img">
+        <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" class="logo-img">
         <h1>رحلة Root</h1>
-        <p>من الصفر حتى الاحتراف في الأمن السيبراني<br>
-        <span style="font-size: 0.8em; opacity: 0.7;">From Zero to Hero in Cyber Security</span></p>
-        <div class="author-info">إعداد المبرمج والمدون: أبو يزن الهاشمي</div>
-        <a href="#index" class="start-btn">بدء الرحلة التعليمية</a>
+        <p>من الصفر حتى الاحتراف في الأمن السيبراني</p>
+        <div class="author-info">إعداد: أبو يزن الهاشمي</div>
+        <a href="#index" class="start-btn">ابدأ القراءة</a>
     </div>
 
     <div class="container" id="index">
         <div class="index-box">
-            <h3>فهرس محتويات الكتاب:</h3>
-            <ul>
-                <li><a href="#lesson1">⬅ الدرس الأول: لغة الآلة ونظام Binary بالكامل</a></li>
-                <li><a href="#lesson2">⬅ الدرس الثاني: هندسة الشبكات والمصطلحات التقنية</a></li>
-                <li><a href="#lesson3">⬅ الدرس الثالث: الأمن الرقمي، التشفير، والـ VPN</a></li>
-                <li><a href="#lesson4">⬅ الدرس الرابع: الهجمات السيبرانية وحلول الحماية</a></li>
-            </ul>
+            <h3 style="color:var(--main-gold); margin:0 0 15px 0;">الفهرس:</h3>
+            <a href="#lesson1">1. لغة الآلة ونظام Binary</a>
+            <a href="#lesson2">2. أساسيات الشبكات</a>
+            <a href="#lesson3">3. الأمن والتشفير</a>
+            <a href="#lesson4">4. أنواع الهجوم والحماية</a>
         </div>
 
         <div class="lesson-card" id="lesson1">
-            <h2>الدرس الأول: لغة الآلة (Binary System)</h2>
-            <p>الحاسوب لا يدرك الحروف أو الصور كما نراها، بل يتعامل مع تيار كهربائي: (1) وجود شحنة، و(0) انعدام الشحنة. هذا ما يسمى بالنظام الثنائي.</p>
-            
-            <h3>| كيف يحول الحاسوب الأرقام؟</h3>
-            <p>يعتمد النظام على مضاعفات الرقم 2 (1, 2, 4, 8, 16, 32, 64, 128). إليك المثال التطبيقي لتحليل الرقم (10):</p>
-            
+            <h2>الدرس الأول: لغة الآلة (Binary)</h2>
+            <p>الحاسوب يفهم فقط 0 و 1. إليك كيف نحول الرقم (10) بالكامل:</p>
             <div class="table-container">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>القيمة المكانية</th>
-                            <th>8</th>
-                            <th>4</th>
-                            <th>2</th>
-                            <th>1</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="bg-gray">حالة الاستخدام</td>
-                            <td>1 (نعم)</td>
-                            <td>0 (لا)</td>
-                            <td>1 (نعم)</td>
-                            <td>0 (لا)</td>
-                        </tr>
-                    </tbody>
+                    <tr><th>القيمة المكانية</th><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr>
+                    <tr><td>الاستخدام للرقم (10)</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
                 </table>
             </div>
-            <p style="text-align: center;"><b>العملية: (8 + 2 = 10) | النتيجة بالثنائي: (1010)</b></p>
-
-            <div class="highlight-box">
-                <h4>وحدات قياس البيانات بالتفصيل:</h4>
-                <ul class="lesson-list">
-                    <li><b>البت (Bit):</b> هو أصغر خلية تخزين (إما 0 أو 1).</li>
-                    <li><b>البايت (Byte):</b> يتكون من 8 بت، وهو كافٍ لتخزين حرف واحد.</li>
-                    <li><b>الكيلوبايت:</b> 1024 بايت.</li>
-                </ul>
-                <p><b>تخيل معي:</b> صورة حجمها 1 ميجابايت تحتوي على 8,388,608 بت (مفتاح تشغيل وإغلاق) مرصوصة بدقة!</p>
-            </div>
+            <p>النتيجة: <b>1010</b>. لاحظ أننا فعلنا فقط الـ (8) والـ (2) ليعطينا المجموع 10.</p>
         </div>
 
         <div class="lesson-card" id="lesson2">
-            <h2>الدرس الثاني: مفاهيم أساسيات الشبكات</h2>
-            <p>الشبكة هي نظام لربط الأجهزة وتبادل البيانات. لفهم الأمن السيبراني، يجب أن تفهم كيف تتحرك البيانات في هذه المسارات.</p>
-            
-            <h3>| أهم المصطلحات التقنية التي يجب حفظها:</h3>
+            <h2>الدرس الثاني: أساسيات الشبكات</h2>
             <div class="table-container">
                 <table>
-                    <tr>
-                        <th>المصطلح</th>
-                        <th>الشرح المفصل والدقيق</th>
-                    </tr>
-                    <tr>
-                        <td>IP Address</td>
-                        <td>العنوان الرقمي الفريد لكل جهاز (مثل عنوان منزلك) لكي تصل إليه البيانات.</td>
-                    </tr>
-                    <tr>
-                        <td>DNS</td>
-                        <td>نظام يحول الأسماء (google.com) إلى أرقام IP، لأنه من الصعب حفظ الأرقام.</td>
-                    </tr>
-                    <tr>
-                        <td>Ports (المنافذ)</td>
-                        <td>أبواب افتراضية في الجهاز (منفذ 80 للمواقع، منفذ 443 للمواقع المشفرة).</td>
-                    </tr>
-                    <tr>
-                        <td>Firewall</td>
-                        <td>برنامج أو جهاز يراقب حركة المرور ويمنع الدخول غير المصرح به.</td>
-                    </tr>
-                    <tr>
-                        <td>Gateway</td>
-                        <td>البوابة التي تربط شبكتك المحلية بشبكة الإنترنت العالمية.</td>
-                    </tr>
+                    <tr><th>المصطلح</th><th>الوظيفة والوصف التفصيلي</th><th>مثال توضيحي</th></tr>
+                    <tr><td>IP Address</td><td>عنوان فريد للجهاز على الشبكة.</td><td>مثل عنوان منزلك البريدي.</td></tr>
+                    <tr><td>DNS</td><td>يحول الأسماء (google.com) إلى أرقام IP.</td><td>مثل "دفتر العناوين" في هاتفك.</td></tr>
+                    <tr><td>Ports</td><td>منافذ لخدمات معينة (80 للمواقع).</td><td>مثل أبواب الغرف داخل المنزل.</td></tr>
+                    <tr><td>Firewall</td><td>برنامج يحمي الشبكة من المتسللين.</td><td>مثل "حارس الأمن" على البوابة.</td></tr>
+                    <tr><td>Gateway</td><td>نقطة الخروج من شبكتك للإنترنت.</td><td>مثل "بوابة المطار" للسفر.</td></tr>
                 </table>
             </div>
         </div>
 
         <div class="lesson-card" id="lesson3">
-            <h2>الدرس الثالث: أمن الشبكة والتشفير</h2>
-            <p>الأمن السيبراني يبدأ من حماية البيانات أثناء انتقالها من جهازك إلى السيرفر.</p>
-
-            <h3>1. بروتوكولات الحماية:</h3>
-            <ul class="lesson-list">
-                <li><b>HTTPS:</b> النسخة المشفرة من تصفح المواقع، تضمن عدم سرقة بياناتك في الطريق.</li>
-                <li><b>VPN:</b> شبكة خاصة افتراضية تنشئ "نفقاً مشفراً" يخفي هويتك وموقعك الجغرافي.</li>
-            </ul>
-
-            <h3>2. علم التشفير (Cryptography):</h3>
-            <div class="info-box">
-                <p><b>التشفير المتماثل:</b> استخدام مفتاح واحد للقفل وللفتح (مثل مفتاح البيت).</p>
-                <p><b>التشفير غير المتماثل:</b> هو الأقوى، حيث يوجد "مفتاح عام" للجميع لقفل البيانات، و"مفتاح خاص" معك وحدك لفتحها.</p>
-                <p><b>الهاش (Hashing):</b> عملية تحويل النص إلى سلسلة رموز لا يمكن إعادتها لأصلها (تستخدم لحفظ كلمات المرور بأمان).</p>
+            <h2>الدرس الثالث: الأمن والتشفير</h2>
+            <div class="highlight-box">
+                <p><b>VPN:</b> ينشئ نفقاً مشفراً يخفي بياناتك عن مزود الخدمة والمتلصصين.</p>
+                <p><b>HTTPS:</b> يضمن تشفير البيانات بين متصفحك والسيرفر (حرف S يعني Secure).</p>
             </div>
+            <h3>أنواع التشفير:</h3>
+            <ul>
+                <li><b>المتماثل:</b> مفتاح واحد للقفل والفتح.</li>
+                <li><b>غير المتماثل:</b> مفتاح عام (Public) ومفتاح خاص (Private).</li>
+                <li><b>الهاش (Hashing):</b> بصمة ثابتة للنص لا يمكن فكها (لحماية كلمات السر).</li>
+            </ul>
         </div>
 
         <div class="lesson-card" id="lesson4">
             <h2>الدرس الرابع: أنواع الهجوم والحلول</h2>
-            <p>هنا ندخل في صلب الأمن السيبراني؛ معرفة كيف يفكر المخترق لكي تحمي نفسك منه.</p>
-
             <div class="table-container">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>نوع الهجوم</th>
-                            <th>كيف يحدث؟ (السيناريو)</th>
-                            <th>طريقة الحماية (الحل)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SQL Injection</td>
-                            <td>إدخال أكواد خبيثة في خانات البحث لسرقة قاعدة البيانات.</td>
-                            <td>تأمين الأكواد البرمجية وفلترة المدخلات.</td>
-                        </tr>
-                        <tr>
-                            <td>Brute Force</td>
-                            <td>محاولة تخمين كلمة السر عبر تجربة ملايين الاحتمالات.</td>
-                            <td>استخدام التحقق الثنائي (2FA) وكلمات معقدة.</td>
-                        </tr>
-                        <tr>
-                            <td>Social Engineering</td>
-                            <td>خداع المستخدم بشرياً للحصول على معلوماته (الهندسة الاجتماعية).</td>
-                            <td>الوعي التقني وعدم الثقة في الغرباء.</td>
-                        </tr>
-                        <tr>
-                            <td>Malware</td>
-                            <td>برامج ضارة (فيروسات، فدية) تخترق النظام.</td>
-                            <td>تحديث النظام دورياً واستخدام مضاد فيروسات قوي.</td>
-                        </tr>
-                    </tbody>
+                    <tr><th>الهجمة</th><th>الشرح التفصيلي</th><th>الحل والحماية</th></tr>
+                    <tr><td>SQL Injection</td><td>حقن أكواد في قواعد البيانات لسرقتها.</td><td>فلترة المدخلات وتأمين البرمجة.</td></tr>
+                    <tr><td>Brute Force</td><td>محاولة تخمين كلمة السر عبر التكرار.</td><td>كلمات معقدة والتحقق الثنائي.</td></tr>
+                    <tr><td>Phishing</td><td>إرسال روابط مزيفة لسرقة الحسابات.</td><td>الوعي وعدم الضغط على روابط مجهولة.</td></tr>
+                    <tr><td>DDoS Attack</td><td>تعطيل الموقع بطلبات وهمية كثيرة.</td><td>استخدام جدران نارية وتوزيع الحمل.</td></tr>
                 </table>
             </div>
-
-            <div class="highlight-box" style="background: #e8f5e9; border-right-color: #2e7d32;">
-                <h3 style="color: #1b5e20; border: none;">الخلاصة الذهبية للحماية:</h3>
-                <p>الأمن ليس منتجاً تشتريه، بل هو "عملية مستمرة". تذكر دائماً: <b>أضعف حلقة في سلسلة الأمن هي الإنسان.</b> كن حذراً، كن واعياً.</p>
+            <div class="highlight-box" style="background:#e8f5e9;">
+                <b>نصيحة أبو يزن:</b> دائماً حدث نظامك، وأغلق المنافذ (Ports) غير الضرورية، ولا تمنح صلاحيات كاملة لأي تطبيق.
             </div>
         </div>
     </div>
 
-    <div class="footer">
-        جميع الحقوق محفوظة © المبرمج أبو يزن الهاشمي - كتاب رحلة Root - 2026
-    </div>
-
+    <div class="footer">جميع الحقوق محفوظة © أبو يزن الهاشمي - 2026</div>
 </body>
 </html>
