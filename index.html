@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كتاب رحلة Root - النسخة الكاملة</title>
+    <title>رحلة Root - المحتوى الكامل</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
@@ -14,18 +14,19 @@
         #viewport { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); }
         #zoom-layer { transition: transform 0.4s ease-out; transform-origin: center center; display: flex; align-items: center; justify-content: center; }
         .book-container { width: 95vw; max-width: 800px; height: 85vh; position: relative; }
-        .page { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none; padding: 30px; box-sizing: border-box; border-radius: 15px; border: 4px solid var(--gold); overflow-y: auto; text-align: right; }
+        .page { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none; padding: 30px; box-sizing: border-box; border-radius: 15px; border: 4px solid var(--gold); overflow-y: auto; text-align: right; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
         .page.active { display: block; }
-        .cover-page { background: #000; color: #fff; text-align: center; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .cover-page { background: #000; color: #fff; text-align: center; display: none; flex-direction: column; align-items: center; justify-content: center; border-color: var(--gold); }
         .cover-page.active { display: flex; }
         .lesson-page { background: var(--paper); color: #000; }
-        .lesson-title { color: var(--maroon); border-bottom: 3px solid var(--maroon); padding-bottom: 10px; font-size: 2em; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: #fff; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .lesson-title { color: var(--maroon); border-bottom: 3px solid var(--maroon); padding-bottom: 10px; font-size: 1.8em; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9em; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
         th { background: var(--maroon); color: #fff; }
-        pre { background: #222; color: #0f0; padding: 10px; direction: ltr; overflow-x: auto; border-radius: 5px; }
-        .nav-dock { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 40px; z-index: 1000; }
-        .nav-link { background: var(--maroon); color: #fff; border: 2px solid var(--gold); padding: 12px 45px; border-radius: 50px; cursor: pointer; font-size: 1.2em; }
+        .highlight-box { background: #fce4ec; border-right: 5px solid var(--pink); padding: 15px; margin: 15px 0; }
+        .code-block { background: #222; color: #0f0; padding: 10px; direction: ltr; overflow-x: auto; border-radius: 5px; font-family: monospace; font-size: 0.85em; margin: 10px 0; }
+        .nav-dock { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 30px; z-index: 1000; }
+        .nav-link { background: var(--maroon); color: #fff; border: 2px solid var(--gold); padding: 10px 40px; border-radius: 50px; cursor: pointer; font-size: 1.1em; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body>
@@ -39,53 +40,120 @@
         <div id="zoom-layer">
             <div class="book-container">
                 <div class="page cover-page active" id="p0">
-                    <i class="bi bi-incognito" style="font-size:120px; color:var(--pink);"></i>
-                    <h1 style="color:var(--pink); font-size:4em; margin:0;">رحلة Root</h1>
-                    <p style="font-size:1.5em; border-top:1px solid var(--gold); border-bottom:1px solid var(--gold); padding:10px;">من الصفر حتى الاحتراف في الأمن السيبراني</p>
-                    <div style="color:var(--gold); font-size:1.3em;">أبو يزن الهاشمي | 783234925</div>
+                    <div style="background:rgba(255,255,255,0.1); padding:20px; border-radius:20px;">
+                        <h1 style="color:var(--pink); font-size:3.5em; margin:0;">رحلة Root</h1>
+                        <p style="font-size:1.3em; color:var(--gold);">من الصفر حتى الاحتراف في الأمن السيبراني</p>
+                        <hr style="width:50%; border:1px solid var(--gold);">
+                        <p>المدون: أبو يزن الهاشمي</p>
+                        <p>الهاتف: 783234925</p>
+                        <p style="font-size:0.8em; opacity:0.7;">تاريخ الإنشاء: الجمعة، 15 مايو 2026</p>
+                    </div>
                 </div>
 
                 <div class="page lesson-page" id="p1">
-                    <h2 class="lesson-title">الدرس الأول: لغة الآلة</h2>
-                    <p>الحاسوب يفهم فقط (0) و (1). التحليل لرقم عشرة هو: (1010).</p>
-                    <table><tr><th>القيمة</th><th>8</th><th>4</th><th>2</th><th>1</th></tr><tr><td>الاستخدام</td><td>1</td><td>0</td><td>1</td><td>0</td></tr></table>
-                    <p>البت (Bit): أصغر وحدة. البايت (Byte): 8 بت.</p>
+                    <h2 class="lesson-title">الدرس الأول: لغة الآلة (Binary System)</h2>
+                    <p>الحاسوب لا يفهم الحروف بل يفهم فقط (0) إغلاق و (1) تشغيل، وتتكون من أرقام ثنائية وتمشي بمبدأ المضاعفة (1, 2, 4, 8, 16, 32).</p>
+                    <h3>مثال تحليل الرقم (10) بـ 4 خانات:</h3>
+                    <table>
+                        <tr><th>القيمة</th><th>8</th><th>4</th><th>2</th><th>1</th></tr>
+                        <tr><td>الاستخدام</td><td>نعم (1)</td><td>لا (0)</td><td>نعم (1)</td><td>لا (0)</td></tr>
+                    </table>
+                    <p><strong>التحليل النهائي لرقم عشرة هو: (1010).</strong></p>
+                    <div class="highlight-box">
+                        <strong>البت والبايت:</strong><br>
+                        • البت (Bit): أصغر وحدة رقمية (0 أو 1).<br>
+                        • البايت (Byte): مجموعة من 8 بت.<br>
+                        • مثال: صورة بحجم 1MB تتكون من 8 مليون مفتاح مرصوصة بجانب بعضها.
+                    </div>
                 </div>
 
                 <div class="page lesson-page" id="p2">
-                    <h2 class="lesson-title">الدرس الثاني: أساسيات الشبكات</h2>
-                    <p>الشبكة وسيلة لنقل المعلومات.</p>
-                    <table><tr><th>المصطلح</th><th>الوصف</th></tr><tr><td>IP</td><td>عنوان الموقع.</td></tr><tr><td>DNS</td><td>يحول الأسماء لأرقام.</td></tr><tr><td>Ports</td><td>منافذ تنفيذ الطلبات.</td></tr></table>
+                    <h2 class="lesson-title">الدرس الثاني: مفهوم أساسيات الشبكات</h2>
+                    <p>الشبكات هي وسيلة تنقل معلومات بين هذا العالم، ويجب توفير مستلزمات هذه الشبكة لكي تشتغل:</p>
+                    <table>
+                        <tr><th>المصطلح</th><th>الوظيفة والوصف</th><th>المثال التوضيحي (الهاشمي)</th></tr>
+                        <tr><td>IP Address</td><td>عنوان المكان (مثل: 192.168.1.10)</td><td>مثل أخوك الضائع في شارع مجهول.</td></tr>
+                        <tr><td>DNS</td><td>يحول الأسماء لأرقام.</td><td>إذا تعطل، تعطل الإنترنت في نظرك.</td></tr>
+                        <tr><td>البورت Ports</td><td>منافذ تنفيذ الطلبات.</td><td>فتحات في جدار البيت (443 للمتصفح).</td></tr>
+                        <tr><td>الجدار الناري</td><td>الحارس الشخصي Firewall.</td><td>يقرر من يدخل ومن يخرج لحماية المنافذ.</td></tr>
+                        <tr><td>البروتوكول</td><td>اللغة المشتركة للفهم.</td><td>اتفاقية تضمن وصول البيانات (TCP/UDP).</td></tr>
+                    </table>
                 </div>
 
                 <div class="page lesson-page" id="p3">
                     <h2 class="lesson-title">الدرس الثالث: التشفير والطحن</h2>
-                    <p>الـ VPN يصنع نفقاً مشفراً. الـ HTTPS يضمن القفل الآمن 🔒.</p>
-                    <p>التشفير (Encryption): يمكن فكه. الطحن (Hashing): بصمة لا يمكن فكها.</p>
+                    <p>الـ <strong>VPN</strong> يصنع "نفقاً مشفراً" يمنع شركة الإنترنت من التجسس عليك.</p>
+                    <p>بروتوكول <strong>HTTPS</strong>: حرف الـ S يعني (Secure) ويضمن "المصافحة الآمنة" 🔒.</p>
+                    <div class="highlight-box">
+                        <strong>التشفير (Encryption):</strong> يمكن فكه بالمفاتيح (متماثل وغير متماثل).<br>
+                        <strong>الطحن (Hashing):</strong> "دالة الاتجاه الواحد"، مستحيل فكه، يستخدم لحماية كلمات السر كبصمة فريدة.
+                    </div>
                 </div>
 
                 <div class="page lesson-page" id="p4">
-                    <h2 class="lesson-title">الدرس الرابع: أنواع الهجوم</h2>
-                    <p>SQL Injection: خداع قاعدة البيانات. Phishing: روابط وهمية لسرقة البيانات.</p>
-                    <p>قاعدة الصلاحيات: لا تعمل بصفة مدير إلا للضرورة.</p>
+                    <h2 class="lesson-title">الدرس الرابع: أنواع الهجوم والحلول</h2>
+                    <p style="font-style:italic;">"المخترق الذكي لا يعطي البرنامج ما يتوقعه."</p>
+                    <table>
+                        <tr><th>الهجمة</th><th>الشرح</th><th>الحل</th></tr>
+                        <tr><td>حقن SQL</td><td>كتابة كود (' OR 1=1 --)</td><td>فلترة المدخلات وتحديث الأكواد.</td></tr>
+                        <tr><td>التخمين</td><td>تجربة آلاف كلمات السر.</td><td>كلمة سر طويلة وصعبة.</td></tr>
+                        <tr><td>التصيد</td><td>رسائل "مبروك فزت".</td><td>الوعي وعدم الضغط على روابط مجهولة.</td></tr>
+                        <tr><td>DDoS Attack</td><td>إغراق الموقع بطلبات وهمية.</td><td>أنظمة حماية وتوزيع الضغط.</td></tr>
+                    </table>
+                    <h3>أهم قواعد الحماية:</h3>
+                    <ul>
+                        <li>أغلق الأبواب (Ports) التي لا تحتاجها.</li>
+                        <li><strong>قاعدة الصلاحيات:</strong> لا تترك أي برنامج يعمل كمدير إلا للضرورة.</li>
+                    </ul>
                 </div>
 
                 <div class="page lesson-page" id="p5">
-                    <h2 class="lesson-title">الدرس الخامس: الصلاحيات (RWX)</h2>
-                    <p>R: قراءة، W: كتابة، X: تنفيذ. المخترق يسعى لرفع صلاحياته ليصبح Root.</p>
+                    <h2 class="lesson-title">الدرس الخامس: الصلاحيات ومعركة الثغرات</h2>
+                    <p>الصلاحيات (Permissions) هي التي تحدد من يملك المفاتيح ومن يبقى خارج النظام.</p>
+                    <h3>1. رفع الصلاحيات (Privilege Escalation):</h3>
+                    <p>المخترق يسعى للتحول من مستخدم عادي إلى <strong>Root/Admin</strong> ليتحكم بالنظام كاملاً.</p>
+                    <h3>2. صلاحيات الملفات (RWX):</h3>
+                    <ul>
+                        <li><strong>(Read) R:</strong> عرض محتوى الملفات.</li>
+                        <li><strong>(Write) W:</strong> تعديل المحتوى (خطر الفدية).</li>
+                        <li><strong>(Execute) X:</strong> تشغيل البرامج (خطر الأبواب الخلفية).</li>
+                    </ul>
+                    <div class="highlight-box">يتم وضع المفتاح الخاص في "خزنة رقمية" (HSM) لحمايته من السرقة حتى لو اختُرق الجهاز.</div>
                 </div>
 
                 <div class="page lesson-page" id="p6">
-                    <h2 class="lesson-title">الدرس السادس: النواة (Kernel)</h2>
-                    <p>النواة هي العقل المدبر. نداء النظام (System Call) هو لغة التخاطب بين البرامج والنواة.</p>
-                    <p>استخدم <code>uname -a</code> لفحص النواة و <code>top</code> لمراقبة الأداء.</p>
+                    <h2 class="lesson-title">الدرس السادس: النواة وإدارة العمليات</h2>
+                    <p><strong>النواة (Kernel):</strong> هي العقل المدبر والمرشد السياحي لكل أمر. الكمبيوتر لا يفهم أي لغة بدونها.</p>
+                    <h3>نداء النظام (System Call):</h3>
+                    <p>هو طلب رسمي يرسله البرنامج للنواة (مثل فتح الكاميرا). النواة تفصل كل برنامج في "زنزانة" منفردة في الرام لضمان الخصوصية.</p>
+                    <h3>العمليات (Processes):</h3>
+                    <ul>
+                        <li><strong>PID:</strong> رقم هوية فريد لكل برنامج شغال.</li>
+                        <li><strong>إدارة العمليات:</strong> النواة تعمل كشرطي مرور يوزع وقت الـ CPU والـ RAM.</li>
+                    </ul>
                 </div>
 
                 <div class="page lesson-page" id="p7">
-                    <h2 class="lesson-title">الدرس السابع: إنشاء المواقع</h2>
-                    <p>نستخدم Python مع Flask لبناء السيرفر.</p>
-                    <pre>pkg install python flask -y\nnano app.py\npython app.py</pre>
-                    <p>الموقع يعمل على <code>http://localhost:8080</code></p>
+                    <h2 class="lesson-title">تابع الدرس السادس: كشف الاختراق</h2>
+                    <p><strong>عبر تطبيق Termux:</strong></p>
+                    <ul>
+                        <li><code>uname -a</code> : لمعرفة إصدار النواة (التاريخ القديم يعني ثغرات).</li>
+                        <li><code>ps -ef</code> : لعرض العمليات (ابحث عن أسماء غريبة).</li>
+                        <li><code>top</code> : إذا وجدت استهلاك المعالج 100%، فهذا فيروس تعدين أو تجسس.</li>
+                    </ul>
+                    <div style="background:#000; color:#f00; padding:15px; border-radius:10px; direction:ltr;">
+                        <strong>Kill Command:</strong> kill -9 [PID]<br>
+                        <span style="color:#fff; font-size:0.8em;">Note: "Operation not permitted" means the virus has higher root privileges.</span>
+                    </div>
+                </div>
+
+                <div class="page lesson-page" id="p8">
+                    <h2 class="lesson-title">الدرس السابع: إنشاء المواقع (Flask)</h2>
+                    <p>تحتاج لتجهيز الأرضية أولاً في Termux:</p>
+                    <div class="code-block">pkg update && pkg upgrade -y<br>pkg install python flask git -y</div>
+                    <p>كود السيرفر البسيط في ملف <code>app.py</code>:</p>
+                    <div class="code-block">from flask import Flask<br>app = Flask(__name__)<br>@app.route('/')<br>def home(): return "<h1>مرحباً بك في موقعي الأول!</h1>"<br>app.run(host='0.0.0.0', port=8080)</div>
+                    <p>شغل الموقع بـ <code>python app.py</code> وافتحه على: <code>http://localhost:8080</code></p>
                 </div>
             </div>
         </div>
@@ -97,7 +165,7 @@
     </div>
 
     <script>
-        let scale = 1.0; let cur = 0; const total = 8;
+        let scale = 1.0; let cur = 0; const total = 9;
         function autoFit() { scale = (window.innerWidth < 700) ? (window.innerWidth / 850) : 1.0; apply(); }
         function zoom(amt) { scale += amt; apply(); }
         function apply() { document.getElementById('zoom-layer').style.transform = "scale("+scale+")"; document.getElementById('zVal').innerText = Math.round(scale*100)+"%"; }
