@@ -6,54 +6,90 @@ cat <<EOF > ~/alhashimi_final/index.html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>رحلة Root - أبو يزن الهاشمي</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: auto; background: #111; padding: 20px; border-radius: 15px; border: 1px solid #800040; }
-        h1 { color: #800040; font-size: 2.5em; }
-        .lesson-card { background: white; color: #333; padding: 20px; border-radius: 10px; margin-top: 30px; text-align: right; border-right: 8px solid #800040; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; text-align: center; }
-        th { background: #800040; color: white; padding: 10px; border: 1px solid #ddd; }
-        td { padding: 10px; border: 1px solid #ddd; font-weight: bold; }
-        .note { background: #fce4ec; padding: 15px; border-radius: 5px; color: #333; margin-top: 15px; }
+        body { background-color: #050505; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        
+        /* قسم الغلاف */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle, #1a000d 0%, #000 100%); border-bottom: 2px solid #800040; }
+        .hero h1 { font-size: 4em; color: #800040; margin: 0; text-shadow: 0 0 20px #800040; }
+        .hero p { font-size: 1.5em; color: #ccc; }
+        .scroll-btn { margin-top: 30px; padding: 10px 25px; background: #800040; color: white; border: none; border-radius: 25px; cursor: pointer; text-decoration: none; font-weight: bold; }
+
+        /* حاوية المحتوى */
+        .content { max-width: 900px; margin: 40px auto; padding: 20px; }
+        .page-header { border-right: 5px solid #800040; padding-right: 15px; margin-bottom: 30px; }
+
+        /* تنسيق الدرس */
+        .lesson-card { background: white; color: #333; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { color: #800040; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #800040; color: white; padding: 12px; border: 1px solid #ddd; }
+        td { padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold; }
+        .note-box { background: #fff0f5; border-right: 5px solid #800040; padding: 15px; margin-top: 20px; border-radius: 5px; }
+        
+        /* الفهرس / أزرار الصفحات */
+        .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 50px; }
+        .page-num { padding: 10px 20px; background: #222; color: #800040; border: 1px solid #800040; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .page-num.active { background: #800040; color: white; }
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <div class="hero">
         <h1>رحلة Root</h1>
-        <p>من الصفر إلى الاحتراف - إعداد: أبو يزن الهاشمي</p>
+        <p>إعداد: أبو يزن الهاشمي</p>
+        <a href="#lessons" class="scroll-btn">ابدأ القراءة</a>
+    </div>
+
+    <div class="content" id="lessons">
+        <div class="page-header">
+            <h2 style="color: #fff; border: none;">الفصل الأول: الأساسيات</h2>
+        </div>
 
         <div class="lesson-card">
-            <h2 style="color: #800040;">الدرس الأول: لغة الآلة (Binary System)</h2>
+            <h2>الدرس الأول: لغة الآلة (Binary System)</h2>
             <p>الحاسوب لا يفهم الحروف بل يفهم فقط (0) إغلاق و (1) تشغيل، وتتكون من أرقام ثنائية وتمشي بمبدأ المضاعفة (1, 2, 4, 8, 16, 32).</p>
 
             <h3>| مثال تحليل الرقم (10) بـ 4 خانات:</h3>
             <table>
-                <tr>
-                    <th>القيمة</th>
-                    <th>8</th>
-                    <th>4</th>
-                    <th>2</th>
-                    <th>1</th>
-                </tr>
-                <tr>
-                    <td style="background:#eee;">الاستخدام</td>
-                    <td>1 (نعم)</td>
-                    <td>0 (لا)</td>
-                    <td>1 (نعم)</td>
-                    <td>0 (لا)</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>القيمة</th>
+                        <th>8</th>
+                        <th>4</th>
+                        <th>2</th>
+                        <th>1</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background:#f9f9f9;">الاستخدام</td>
+                        <td>1 (نعم)</td>
+                        <td>0 (لا)</td>
+                        <td>1 (نعم)</td>
+                        <td>0 (لا)</td>
+                    </tr>
+                </tbody>
             </table>
             <p><strong>التحليل النهائي لرقم عشرة هو: (1010)</strong></p>
 
-            <div class="note">
-                <h4 style="margin:0; color:#800040;">البت والبايت:</h4>
-                <ul style="padding-right: 20px;">
+            <div class="note-box">
+                <h4 style="margin-top:0;">البت والبايت:</h4>
+                <ul>
                     <li><strong>البت (Bit):</strong> أصغر وحدة رقمية (0 أو 1).</li>
                     <li><strong>البايت (Byte):</strong> مجموعة من 8 بت.</li>
                 </ul>
                 <p>مثال: صورة بحجم 1MB تتكون من 8 مليون مفتاح مرصوصة بجانب بعضها.</p>
             </div>
         </div>
+
+        <div class="pagination">
+            <div class="page-num active">1</div>
+            <div class="page-num">2</div>
+            <div class="page-num">3</div>
+            <div class="page-num">التالي ➔</div>
+        </div>
     </div>
+
 </body>
 </html>
 EOF
