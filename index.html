@@ -3,192 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رحلة Root - أبو يزن الهاشمي</title>
+    <title>كتاب رحلة Root - أبو يزن الهاشمي</title>
     <style>
-        :root { --gold: #c0a060; --maroon: #800040; --black: #0a0a0a; --white: #ffffff; }
+        :root { --gold: #c0a060; --maroon: #800040; --bg: #1a1a1a; --paper: #ffffff; }
         
-        /* إعدادات الصفحة لدعم التكبير والتصغير */
-        html { overflow-x: hidden; scroll-behavior: smooth; }
         body { 
-            background-color: var(--black); 
-            color: #eee; 
-            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: var(--bg); 
             margin: 0; padding: 0; 
-            line-height: 1.8; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
         }
 
-        .hero { 
-            height: 100vh; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; 
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://alhashemi550.github.io/alhashimi_root/logo.png') center/cover;
-            text-align: center; padding: 20px;
+        /* شريط التحكم العلوي المطور */
+        .reader-controls {
+            position: fixed; top: 0; left: 0; right: 0; height: 60px;
+            background: #000; display: flex; justify-content: center; align-items: center;
+            gap: 15px; z-index: 1000; border-bottom: 2px solid var(--gold);
         }
-        .hero h1 { font-size: 3.5em; color: var(--gold); margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.2em; color: var(--white); opacity: 0.8; }
-        .author { color: var(--gold); font-weight: bold; margin-top: 10px; }
-
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
-
-        /* تنسيق دروس الكتاب لتظهر كصفحات كاملة */
-        .lesson-page { 
-            background: #fff; color: #333; 
-            margin-bottom: 50px; border-radius: 12px; 
-            overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border-top: 8px solid var(--maroon);
-            padding: 40px;
+        .zoom-info { color: var(--gold); font-weight: bold; min-width: 60px; text-align: center; }
+        .control-btn {
+            background: var(--gold); color: #000; border: none; padding: 8px 15px;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px;
         }
 
-        h2 { color: var(--maroon); border-bottom: 3px solid #f0f0f0; padding-bottom: 15px; font-size: 1.8em; }
-        h3 { color: #555; background: #f9f9f9; padding: 10px; border-right: 5px solid var(--gold); margin-top: 30px; }
+        /* حاوية الكتاب الأساسية */
+        #book-viewport {
+            margin-top: 80px; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+            perspective: 1000px;
+        }
 
-        /* تنسيق الجداول لتكون واضحة وقابلة للتمرير */
-        .table-wrapper { overflow-x: auto; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { background: var(--maroon); color: white; padding: 15px; text-align: center; }
-        td { padding: 15px; border-bottom: 1px solid #eee; text-align: right; font-size: 0.95em; }
-        tr:nth-child(even) { background: #fcfcfc; }
+        #book-canvas {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top center;
+            width: 100%; max-width: 950px;
+        }
 
-        .note-box { background: #fffde7; border-right: 6px solid #fbc02d; padding: 20px; margin: 20px 0; border-radius: 5px; }
-        .cmd-box { background: #263238; color: #80cbc4; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; direction: ltr; text-align: left; margin: 15px 0; position: relative; overflow-x: auto; }
-        
-        .footer { text-align: center; padding: 50px; color: #777; font-size: 0.9em; }
+        /* تصميم ورقة الكتاب */
+        .page {
+            background: var(--paper); color: #333;
+            margin-bottom: 40px; padding: 50px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border-radius: 2px; position: relative;
+            min-height: 800px; box-sizing: border-box;
+        }
+        .page::before {
+            content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 15px;
+            background: linear-gradient(to left, rgba(0,0,0,0.1), transparent);
+        }
 
-        /* ميزة التكبير والتصغير للصور (اختياري) */
-        .zoom-content { transition: transform .2s; }
-        .zoom-content:hover { transform: scale(1.01); }
+        h2 { color: var(--maroon); border-bottom: 3px solid var(--gold); padding-bottom: 10px; font-size: 2em; }
+        h3 { color: #444; border-right: 5px solid var(--maroon); padding-right: 15px; margin-top: 30px; }
 
+        /* الجداول - عرض كامل بدون تمرير */
+        .table-container { width: 100%; margin: 25px 0; }
+        table { width: 100%; border-collapse: collapse; table-layout: auto; }
+        th { background: var(--maroon); color: white; padding: 15px; text-align: center; border: 1px solid #600030; }
+        td { padding: 15px; border: 1px solid #ddd; text-align: center; font-size: 1.1em; line-height: 1.4; }
+        tr:nth-child(even) { background: #f9f9f9; }
+
+        .note-box { background: #fffde7; border: 1px solid #ffe082; padding: 20px; border-right: 6px solid #fbc02d; margin: 20px 0; }
+        .code-block { background: #2b2b2b; color: #a9b7c6; padding: 20px; border-radius: 4px; font-family: 'Courier New', monospace; direction: ltr; text-align: left; margin: 20px 0; }
+
+        .page-num { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: #999; font-size: 0.9em; }
     </style>
 </head>
 <body>
 
-    <div class="hero">
-        <h1>رحلة Root</h1>
-        <p>من الصفر حتى الاحتراف في الأمن السيبراني</p>
-        <p>From Zero to Hero in Cyber Security</p>
-        <div class="author">إعداد: أبو يزن الهاشمي</div>
-        <div style="margin-top:20px; color:#aaa;">هاتف: 783234925 | 2026-05-15</div>
+    <div class="reader-controls">
+        <button class="control-btn" onclick="adjustZoom(0.1)">تـكـبـيـر +</button>
+        <span class="zoom-info" id="zLabel">100%</span>
+        <button class="control-btn" onclick="adjustZoom(-0.1)">تـصـغـيـر -</button>
+        <button class="control-btn" style="background:#eee" onclick="resetZoom()">إعادة ضبط</button>
     </div>
 
-    <div class="container">
+    <div id="book-viewport">
+        <div id="book-canvas">
 
-        <div class="lesson-page zoom-content">
-            <h2>الدرس الأول: لغة الآلة (Binary System)</h2>
-            <p>الحاسوب لا يفهم الحروف بل يفهم (0) إغلاق و (1) تشغيل، وتتكون من أرقام ثنائية وتمشي بمبدأ المضاعفة (1, 2, 4, 8, 16, 32).</p>
-            
-            <h3>| مثال تحليل الرقم (10) بـ 4 خانات:</h3>
-            <div class="table-wrapper">
-                <table>
-                    <tr><th>القيمة</th><th>8</th><th>4</th><th>2</th><th>1</th></tr>
-                    <tr><td>الاستخدام</td><td>نعم (1)</td><td>لا (0)</td><td>نعم (1)</td><td>لا (0)</td></tr>
-                </table>
+            <div class="page" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                <h1 style="font-size: 4em; color: var(--maroon); margin: 0;">رحلة Root</h1>
+                <p style="font-size: 1.8em; color: var(--gold);">من الصفر حتى الاحتراف في الأمن السيبراني</p>
+                <div style="margin: 40px 0;">
+                    <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" style="width: 200px;">
+                </div>
+                <p style="font-size: 1.4em;">إعداد: أبو يزن الهاشمي</p>
+                <p>تاريخ الإصدار: 15 مايو 2026</p>
+                <div class="page-num">غلاف الكتاب</div>
             </div>
-            <p><b>التحليل النهائي لرقم عشرة هو: (1010).</b></p>
-            
-            <div class="note-box">
-                <b>البت والبايت:</b><br>
-                • <b>البت (Bit):</b> أصغر وحدة رقمية (0 أو 1).<br>
-                • <b>البايت (Byte):</b> مجموعة من 8 بت.<br>
-                <b>مثال:</b> صورة بحجم 1MB تتكون من 8 مليون مفتاح مرصوصة بجانب بعضها.
+
+            <div class="page">
+                <h2>الدرس الأول: لغة الآلة (Binary System)</h2>
+                <p>الحاسوب لا يفهم الحروف بل يفهم (0) إغلاق و (1) تشغيل، وتتكون من أرقام ثنائية وتمشي بمبدأ المضاعفة.</p>
+                
+                <h3>| مثال تحليل الرقم (10) بـ 4 خانات:</h3>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>القيمة</th><th>8</th><th>4</th><th>2</th><th>1</th></tr></thead>
+                        <tbody><tr><td>الاستخدام</td><td>نعم (1)</td><td>لا (0)</td><td>نعم (1)</td><td>لا (0)</td></tr></tbody>
+                    </table>
+                </div>
+                <p>التحليل النهائي لرقم عشرة هو: <b>(1010)</b>.</p>
+                <div class="note-box">
+                    <b>البت والبايت:</b><br>
+                    • <b>البت (Bit):</b> أصغر وحدة رقمية.<br>
+                    • <b>البايت (Byte):</b> مجموعة من 8 بت.
+                </div>
+                <div class="page-num">صفحة 1</div>
             </div>
+
+            <div class="page">
+                <h2>الدرس الثاني: مفاهيم أساسيات الشبكات</h2>
+                <p>الشبكات هي وسيلة تنقل معلومات، ويجب توفير المستلزمات التالية لضمان عملها:</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>المصطلح</th><th>الوظيفة والوصف</th><th>المثال التوضيحي (الهاشمي)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>IP Address</td><td>عنوان المكان أو الموقع المراد إيجاده.</td><td>مثل أخوك الضائع في شارع مجهول.</td></tr>
+                            <tr><td>DNS</td><td>يحول الأسماء لأرقام (دليل الهاتف).</td><td>بدونه تتعطل الرؤية رغم عمل الأسلاك.</td></tr>
+                            <tr><td>Ports</td><td>منافذ تنفيذ الطلبات (لكل بورت رقم).</td><td>فتحات في جدار البيت (80/443).</td></tr>
+                            <tr><td>Firewall</td><td>الحارس الشخصي (يقرر من يدخل).</td><td>حماية المنافذ من المتسللين.</td></tr>
+                            <tr><td>البروتوكول</td><td>اللغة المشتركة لضمان الفهم.</td><td>اتفاقية تضمن وصول البيانات سليمة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page-num">صفحة 2</div>
+            </div>
+
+            <div class="page">
+                <h2>الدرس الثالث: أمن الشبكة والتشفير</h2>
+                <h3>1. أمن الشبكة (حماية الطريق)</h3>
+                <div class="note-box" style="background:#fff3e0; border-right-color:#ff9800;">
+                    <b>القاعدة الذهبية:</b> أي رسالة تخرج من جهازك هي "رسالة مراقبة" ما لم تكن مشفرة.
+                </div>
+                <p>الـ <b>VPN</b> يصنع نفقاً مشفراً، بينما <b>HTTPS</b> يضمن المصافحة الآمنة (Secure).</p>
+
+                <h3>2. التشفير (Encryption)</h3>
+                <div class="table-container">
+                    <table>
+                        <tr><th>النوع</th><th>الفكرة</th><th>الاستخدام</th></tr>
+                        <tr><td>المتماثل (Symmetric)</td><td>مفتاح واحد للقفل والفتح.</td><td>تشفير الملفات الضخمة.</td></tr>
+                        <tr><td>غير المتماثل (Asymmetric)</td><td>مفتاح عام (يقفل) ومفتاح خاص (يفتح).</td><td>تبادل المفاتيح الآمن.</td></tr>
+                    </table>
+                </div>
+                <div class="page-num">صفحة 3</div>
+            </div>
+
+            <div class="page">
+                <h2>الدرس الرابع والخامس: الهجمات ومعركة الثغرات</h2>
+                <div class="table-container">
+                    <table>
+                        <tr><th>الهجمة</th><th>الشرح</th><th>الحل</th></tr>
+                        <tr><td>SQL Injection</td><td>تلاعب بقواعد البيانات.</td><td>فلترة المدخلات.</td></tr>
+                        <tr><td>DDoS Attack</td><td>إغراق الموقع بطلبات وهمية.</td><td>أنظمة توزيع الضغط.</td></tr>
+                        <tr><td>XSS</td><td>وضع كود خبيث في الصفحات.</td><td>تشفير المخرجات.</td></tr>
+                    </table>
+                </div>
+                <h3>| صلاحيات الملفات الكبرى (RWX):</h3>
+                <ul>
+                    <li><b>Read (R):</b> قراءة المحتوى.</li>
+                    <li><b>Write (W):</b> تعديل المحتوى (خطر الفدية).</li>
+                    <li><b>Execute (X):</b> تشغيل البرامج (خطر الأبواب الخلفية).</li>
+                </ul>
+                <div class="page-num">صفحة 4</div>
+            </div>
+
         </div>
-
-        <div class="lesson-page zoom-content">
-            <h2>الدرس الثاني: مفهوم أساسيات الشبكات</h2>
-            <p>الشبكات هي وسيلة تنقل معلومات بين هذا العالم، ويجب توفير مستلزمات هذه الشبكة عشان تشتغل:</p>
-            
-            <div class="table-wrapper">
-                <table>
-                    <tr><th>المصطلح</th><th>الوظيفة والوصف</th><th>المثال التوضيحي (الهاشمي)</th></tr>
-                    <tr><td>IP Address</td><td>عنوان المكان أو الموقع المراد إيجاده (مثلاً: 192.168.1.10).</td><td>مثل أخوك الضائع في شارع مجهول ولا تملك وسيلة تواصل معه.</td></tr>
-                    <tr><td>DNS</td><td>المحطة الأولى؛ يحول الأسماء لأرقام.</td><td>دليل الهاتف وبدونه تتعطل الرؤية؛ إذا تعطل DNS تعطل الإنترنت رغم أن الأسلاك تعمل!</td></tr>
-                    <tr><td>الپورت Ports</td><td>منافذ تنفيذ الطلبات. لكل بورت رقم ثابت عالمياً.</td><td>فتحات في جدار البيت؛ 443 للمتصفح و22 للصيانة.</td></tr>
-                    <tr><td>الجدار الناري</td><td>الحارس الشخصي Firewall.</td><td>يقرر من يدخل (Inbound) ومن يخرج (Outbound) لحماية المنافذ.</td></tr>
-                    <tr><td>البروتوكول</td><td>اللغة المشتركة لضمان الفهم.</td><td>اتفاقية بين تجار تضمن وصول البيانات سليمة (TCP) أو سريعة (UDP).</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="lesson-page zoom-content">
-            <h2>الدرس الثالث: أمن الشبكة والتشفير</h2>
-            <h3>1. أمن الشبكة (حماية الطريق)</h3>
-            <div class="note-box" style="background:#fff3e0; border-right-color:#ff9800;">
-                <b>القاعدة الذهبية:</b> أي رسالة تخرج من جهازك هي "رسالة مراقبة" يمكن قراءتها ما لم تكن مشفرة.
-            </div>
-            <ul>
-                <li><b>الـ VPN:</b> يصنع "نفقاً مشفراً" بين جهازك وسيرفر بعيد، مما يمنع الراوتر أو شركة الإنترنت من معرفة ما ترسل.</li>
-                <li><b>خطر الواي فاي العام:</b> يمكن للمخترق عمل هجوم (Man-in-the-Middle) ليمرر بياناتك من خلال جهازه أولاً.</li>
-                <li><b>بروتوكول HTTPS:</b> حرف الـ S يعني (Secure). عند رؤية القفل، يعني أن "المصافحة الآمنة" تمت.</li>
-            </ul>
-
-            <h3>2. التشفير (Encryption) - "لغة المفاتيح"</h3>
-            <p><b>أ- التشفير المتماثل (Symmetric):</b> مفتاح واحد للكل (مثل مفتاح باب البيت). يُستخدم لتشفير الملفات الكبيرة لأنه سريع جداً.</p>
-            <p><b>ب- التشفير غير المتماثل (Asymmetric):</b> مفتاحان مرتبطان رياضياً: (Public Key) يقفل فقط، و (Private Key) يفتح فقط ويبقى مخبأً عندك.</p>
-
-            <h3>3. "الطحن" (Hashing) - "دالة الاتجاه الواحد"</h3>
-            <p>التصحيح العلمي: الهاش ليس تشفيراً، لأن التشفير يمكن فكه، أما الهاش فمستحيل فكه.</p>
-        </div>
-
-        <div class="lesson-page zoom-content">
-            <h2>الدرس الرابع: أنواع الهجوم والحلول</h2>
-            <div class="note-box" style="background:#fce4ec; border-right-color:#e91e63; text-align:center;">
-                "المخترق الذكي لا يعطي البرنامج ما يتوقعه!"
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <tr><th>الهجمة</th><th>الشرح</th><th>الحل</th></tr>
-                    <tr><td>حقن SQL</td><td>كتابة كود مثل ' OR 1=1 -- لخداع قاعدة البيانات.</td><td>فلترة المدخلات وتحديث الأكواد.</td></tr>
-                    <tr><td>التخمين</td><td>تجربة آلاف كلمات السر في الثانية.</td><td>كلمة سر طويلة وصعبة.</td></tr>
-                    <tr><td>التنكر (Phishing)</td><td>رسائل "مبروك فزت" لسرقة بياناتك.</td><td>الوعي وعدم الضغط على روابط مجهولة.</td></tr>
-                    <tr><td>DDoS Attack</td><td>إغراق الموقع بطلبات وهمية حتى ينهار.</td><td>أنظمة حماية وتوزيع الضغط.</td></tr>
-                    <tr><td>XSS</td><td>وضع كود خبيث في صفحات الويب لتصميم المدخلات.</td><td>تشفير البيانات ومنع الأكواد غير المصرح بها.</td></tr>
-                </table>
-            </div>
-
-            <h3>| أهم قواعد الحماية:</h3>
-            <ul>
-                <li>أغلق الأبواب (Ports) التي لا تحتاجها.</li>
-                <li>تغليف البيانات بتشفير قوي (مثل HTTPS).</li>
-                <li><b>قاعدة الصلاحيات:</b> "لا تترك أي برنامج يعمل بصفة مدير إلا للضرورة القصوى".</li>
-            </ul>
-        </div>
-
-        <div class="lesson-page zoom-content">
-            <h2>الدرس الخامس والسادس: الصلاحيات وفحص الأنظمة</h2>
-            <p><b>نبذة:</b> من هنا تبدأ معركة التحكم؛ الصلاحيات (Permissions) هي التي تحدد من يملك المفاتيح ومن يبقى خارج النظام.</p>
-            
-            <h3>1. رفع الصلاحيات (Privilege Escalation)</h3>
-            <p>دخول المخترق كـ "مستخدم عادي" لا يكفيه، فيبدأ بمحاولة "رفع الصلاحيات" ليصبح <b>Root/Admin</b> وهو المتحكم الوحيد.</p>
-
-            <h3>2. صلاحيات الملفات الكبرى (RWX)</h3>
-            <ul>
-                <li><b>(Read) قراءة - R:</b> عرض محتوى الملفات والمجلدات.</li>
-                <li><b>(Write) كتابة - W:</b> تعديل المحتوى (خطر التشفير ببرامج الفدية).</li>
-                <li><b>(Execute) تنفيذ - X:</b> تشغيل البرامج (خطر زرع الأبواب الخلفية).</li>
-            </ul>
-
-            <h3>| فحص الهاتف عبر ترمكس (Termux)</h3>
-            <div class="cmd-box">
-                # معرفة إصدار النواة (Kernel)<br>
-                uname -a <br><br>
-                # عرض العمليات ومعرفة هويتها (PID)<br>
-                ps -ef <br><br>
-                # مراقبة الأداء والشك في الاختراق<br>
-                top
-            </div>
-
-            <h3>| فحص الكمبيوتر (Windows)</h3>
-            <p>مدير المهام (Task Manager): إذا وجدت عملية مشبوهة مثل svch0st.exe (بالرقم صفر بدل الحرف O)، استخدم أمر القتل:</p>
-            <div class="cmd-box" style="color:#ff5252;">
-                kill -9 [PID]
-            </div>
-        </div>
-
     </div>
 
-    <div class="footer">
-        جميع الحقوق محفوظة © أبو يزن الهاشمي - رحلة Root 2026 <br>
-        تم التصميم لدعم القراءة الكاملة والتكبير
-    </div>
+    <script>
+        let zoomLevel = 1.0;
+        const canvas = document.getElementById('book-canvas');
+        const label = document.getElementById('zLabel');
+
+        function adjustZoom(amount) {
+            zoomLevel += amount;
+            if(zoomLevel < 0.5) zoomLevel = 0.5;
+            if(zoomLevel > 2.5) zoomLevel = 2.5;
+            applyZoom();
+        }
+
+        function resetZoom() {
+            zoomLevel = 1.0;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            canvas.style.transform = "scale(" + zoomLevel + ")";
+            label.innerText = Math.round(zoomLevel * 100) + "%";
+        }
+    </script>
 
 </body>
 </html>
