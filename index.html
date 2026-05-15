@@ -9,28 +9,23 @@
         :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; }
         body { background: var(--bg); margin: 0; padding: 0; font-family: 'Aref Ruqaa', serif; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
         
+        /* شريط التحكم */
         .header-tools { position: fixed; top: 0; width: 100%; height: 60px; background: #111; display: flex; justify-content: center; align-items: center; gap: 15px; z-index: 10000; border-bottom: 2px solid var(--gold); }
         .zoom-btn { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-family: sans-serif; }
 
+        /* العرض الذكي */
         #viewport { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); }
         #zoom-layer { transition: transform 0.4s ease-out; transform-origin: center center; display: flex; align-items: center; justify-content: center; }
 
-        .cover { width: 90vw; max-width: 800px; height: 85vh; background: #000; border: 4px solid var(--gold); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; box-sizing: border-box; text-align: center; position: relative; }
+        /* الغلاف */
+        .cover { width: 90vw; max-width: 800px; height: 85vh; background: #000; border: 4px solid var(--gold); border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; box-sizing: border-box; text-align: center; position: relative; }
         
-        /* رسمة الهكر بالقبعة واللابتوب - نسخة الكود المضمونة */
-        .hacker-box {
-            width: 180px; height: 180px; position: relative; margin-bottom: 20px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .hat { width: 120px; height: 40px; background: var(--pink); border-radius: 50% 50% 0 0; position: relative; box-shadow: 0 0 20px var(--pink); }
-        .hat::after { content: ''; position: absolute; bottom: -10px; left: -20px; width: 160px; height: 15px; background: var(--pink); border-radius: 10px; }
-        .laptop { width: 140px; height: 80px; border: 3px solid var(--gold); margin-top: 25px; border-radius: 5px; background: #111; display: flex; align-items: center; justify-content: center; position: relative; }
-        .laptop::after { content: '010101'; color: var(--gold); font-family: monospace; font-size: 12px; }
-        .laptop-base { width: 160px; height: 10px; background: var(--gold); border-radius: 0 0 10px 10px; }
+        /* أيقونة الهكر البرمجية (ثابتة للأبد) */
+        .hacker-svg { width: 180px; height: 180px; filter: drop-shadow(0 0 20px var(--pink)); margin-bottom: 20px; }
 
         h1 { color: var(--pink); font-size: 5.5em; margin: 0; text-shadow: 0 0 25px rgba(233,30,99,0.7); }
         .subtitle { font-size: 1.8em; color: #fff; margin: 15px 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 10px 0; width: 85%; }
-        .author-info { color: var(--gold); font-size: 1.5em; margin-top: 25px; }
+        .author-info { color: var(--gold); font-size: 1.5em; margin-top: 25px; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -38,24 +33,25 @@
         <button class="zoom-btn" onclick="adjustZoom(0.1)">تكبير +</button>
         <span id="zVal" style="color:var(--gold); font-weight:bold; font-family:sans-serif;">100%</span>
         <button class="zoom-btn" onclick="adjustZoom(-0.1)">تصغير -</button>
-        <button class="zoom-btn" style="background:#fff" onclick="resetToFit()">الوضع التلقائي</button>
+        <button class="zoom-btn" style="background:#fff" onclick="resetToFit()">الحجم المناسب</button>
     </div>
 
     <div id="viewport">
         <div id="zoom-layer">
             <div class="cover">
-                <div class="hacker-box">
-                    <div class="hat"></div>
-                    <div class="laptop"></div>
-                    <div class="laptop-base"></div>
-                </div>
+                <svg class="hacker-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C7.5 2 4 4.5 4 8C4 9.5 4.5 10.5 5.5 11.5L2 15V17H22V15L18.5 11.5C19.5 10.5 20 9.5 20 8C20 4.5 16.5 2 12 2Z" fill="#e91e63"/>
+                    <rect x="4" y="18" width="16" height="2" fill="#c0a060"/>
+                    <path d="M9 13H15M10 15H14" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
                 
                 <h1>رحلة Root</h1>
                 <div class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني<br><small>Journey of Root (Ar-En)</small></div>
                 
                 <div class="author-info">
                     المدون: <b>أبو يزن الهاشمي</b><br>
-                    الهاتف: 783234925
+                    الهاتف: 783234925<br>
+                    <span style="color:#666; font-size:0.7em;">تاريخ الإنشاء: الجمعة، 15 مايو 2026</span>
                 </div>
             </div>
         </div>
@@ -64,8 +60,8 @@
     <script>
         let scale = 1.0;
         function resetToFit() {
-            const sw = window.innerWidth;
-            scale = (sw < 600) ? (sw / 850) : 1.0;
+            const screenWidth = window.innerWidth;
+            scale = (screenWidth < 600) ? (screenWidth / 850) : 1.0;
             apply();
         }
         function adjustZoom(delta) { scale += delta; apply(); }
