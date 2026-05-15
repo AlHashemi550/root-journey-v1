@@ -3,37 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رحلة Root - النسخة الثابتة</title>
+    <title>كتاب رحلة Root - النسخة الكاملة</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
-        :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; }
+        :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; --paper: #fdfdfd; --maroon: #600000; }
         
         body { background: var(--bg); margin: 0; padding: 0; font-family: 'Aref Ruqaa', serif; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
 
-        /* أدوات التحكم */
         .header-tools { position: fixed; top: 0; width: 100%; height: 60px; background: #111; display: flex; justify-content: center; align-items: center; gap: 15px; z-index: 10000; border-bottom: 2px solid var(--gold); }
         .zoom-btn { background: var(--gold); color: #000; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: sans-serif; }
 
         #viewport { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); }
         #zoom-layer { transition: transform 0.4s ease-out; transform-origin: center center; display: flex; align-items: center; justify-content: center; }
 
-        /* هيكل الكتاب الثابت */
-        .book-container { width: 90vw; max-width: 800px; height: 85vh; position: relative; }
+        .book-container { width: 95vw; max-width: 800px; height: 85vh; position: relative; }
         
-        .page { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none; padding: 40px; box-sizing: border-box; border-radius: 15px; border: 4px solid var(--gold); background: #000; text-align: center; color: #fff; }
-        .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        /* تصميم الصفحات */
+        .page { width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none; padding: 40px; box-sizing: border-box; border-radius: 15px; border: 4px solid var(--gold); overflow-y: auto; }
+        .page.active { display: block; }
 
-        /* رسمة الهكر المثبتة */
-        .hacker-icon { font-size: 140px; color: var(--pink); margin-bottom: 20px; text-shadow: 0 0 30px var(--pink); }
+        /* صفحة الغلاف */
+        .cover-page { background: #000; color: #fff; text-align: center; }
+        .hacker-icon { font-size: 140px; color: var(--pink); text-shadow: 0 0 30px var(--pink); display: block; margin-bottom: 20px; }
+        .glow-title { color: var(--pink); font-size: 5em; margin: 0; text-shadow: 0 0 25px rgba(233,30,99,0.7); }
+        
+        /* صفحة الدرس الأول */
+        .lesson-page { background: var(--paper); color: #000; text-align: right; }
+        .lesson-title { color: var(--maroon); border-bottom: 3px solid var(--maroon); padding-bottom: 10px; font-size: 2.5em; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #fff; }
+        th, td { border: 2px solid #ddd; padding: 12px; text-align: center; font-size: 1.2em; }
+        th { background: var(--maroon); color: #fff; }
+        
+        .highlight-box { background: #ffe4ec; border-right: 8px solid var(--pink); padding: 20px; margin-top: 30px; border-radius: 5px; }
 
-        h1 { color: var(--pink); font-size: 5em; margin: 0; text-shadow: 0 0 25px rgba(233,30,99,0.7); }
-        .subtitle { font-size: 1.6em; color: #fff; margin: 15px 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 10px 0; width: 85%; }
-        .author-info { color: var(--gold); font-size: 1.5em; margin-top: 25px; line-height: 1.5; }
-
-        /* أزرار التنقل */
         .nav-dock { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 40px; z-index: 1000; }
-        .nav-link { background: #500000; color: #fff; border: 2px solid var(--gold); padding: 12px 45px; border-radius: 50px; cursor: pointer; font-family: 'Aref Ruqaa', serif; font-size: 1.2em; }
+        .nav-link { background: var(--maroon); color: #fff; border: 2px solid var(--gold); padding: 12px 45px; border-radius: 50px; cursor: pointer; font-family: 'Aref Ruqaa', serif; font-size: 1.3em; }
     </style>
 </head>
 <body>
@@ -47,29 +53,70 @@
 
     <div id="viewport">
         <div id="zoom-layer">
-            <div class="book-container" id="pages-container">
+            <div class="book-container">
                 
-                <div class="page active" id="p0">
-                    <i class="bi bi-incognito hacker-icon"></i>
-                    <h1>رحلة Root</h1>
-                    <div class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني<br><small>Journey of Root (Ar-En)</small></div>
-                    <div class="author-info">المدون: <b>أبو يزن الهاشمي</b><br>الهاتف: 783234925</div>
-                    <div style="margin-top:20px; color:#444; font-size:0.8em;">تاريخ الإنشاء: 15 مايو 2026</div>
+                <div class="page active cover-page" id="p0">
+                    <div style="margin-top: 50px;">
+                        <i class="bi bi-incognito hacker-icon"></i>
+                        <h1 class="glow-title">رحلة Root</h1>
+                        <p style="font-size: 1.8em; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); width: 80%; margin: 20px auto; padding: 10px 0;">
+                            من الصفر حتى الاحتراف في الأمن السيبراني
+                        </p>
+                        <div style="color: var(--gold); font-size: 1.5em; margin-top: 30px;">
+                            المدون: أبو يزن الهاشمي<br>
+                            الهاتف: 783234925
+                        </div>
+                    </div>
                 </div>
 
+                <div class="page lesson-page" id="p1">
+                    <h2 class="lesson-title">الدرس الأول: لغة الآلة (Binary System)</h2>
+                    <p style="font-size: 1.4em;">الحاسوب لا يفهم الحروف بل يفهم فقط (0) إغلاق و (1) تشغيل، وتتكون من أرقام ثنائية وتمشي بمبدأ المضاعفة (1, 2, 4, 8, 16, 32).</p>
+                    
+                    <h3 style="color: var(--pink); margin-top: 30px;">| مثال تحليل الرقم (10) بـ 4 خانات:</h3>
+                    <table>
+                        <tr>
+                            <th>القيمة</th>
+                            <th>8</th>
+                            <th>4</th>
+                            <th>2</th>
+                            <th>1</th>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; background: #f9f9f9;">الاستخدام</td>
+                            <td>نعم (1)</td>
+                            <td>لا (0)</td>
+                            <td>نعم (1)</td>
+                            <td>لا (0)</td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 1.3em; background: #eee; padding: 10px; display: inline-block;">التحليل النهائي لرقم عشرة هو: <strong>(1010)</strong></p>
+                    
+                    <div class="highlight-box">
+                        <h3 style="margin-top: 0; color: var(--maroon);">البت والبايت:</h3>
+                        <ul style="font-size: 1.3em; list-style: none; padding: 0;">
+                            <li>• <strong>البت (Bit):</strong> أصغر وحدة رقمية (0 أو 1).</li>
+                            <li>• <strong>البايت (Byte):</strong> مجموعة من 8 بت.</li>
+                        </ul>
+                        <p style="font-size: 1.2em; border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 10px;">
+                            <strong>مثال:</strong> صورة بحجم 1MB تتكون من 8 مليون مفتاح مرصوصة بجانب بعضها.
+                        </p>
+                    </div>
                 </div>
+
+            </div>
         </div>
     </div>
 
     <div class="nav-dock">
-        <button class="nav-link" onclick="prevPage()">السابق</button>
-        <button class="nav-link" onclick="nextPage()">التالي</button>
+        <button class="nav-link" onclick="changePage(-1)">السابق</button>
+        <button class="nav-link" onclick="changePage(1)">التالي</button>
     </div>
 
     <script>
         let scale = 1.0;
         let currentPage = 0;
-        const totalPages = 2; // سنزيد هذا الرقم مع كل درس جديد
+        const totalPages = 2;
 
         function autoFit() {
             const sw = window.innerWidth;
@@ -83,13 +130,15 @@
             document.getElementById('zVal').innerText = Math.round(scale * 100) + "%";
         }
 
-        function nextPage() { if(currentPage < totalPages-1) switchPage(currentPage+1); else alert('جاري تجهيز الدروس الجديدة...'); }
-        function prevPage() { if(currentPage > 0) switchPage(currentPage-1); }
-
-        function switchPage(index) {
-            document.getElementById('p' + currentPage).classList.remove('active');
-            currentPage = index;
-            document.getElementById('p' + currentPage).classList.add('active');
+        function changePage(delta) {
+            let next = currentPage + delta;
+            if (next >= 0 && next < totalPages) {
+                document.getElementById('p' + currentPage).classList.remove('active');
+                currentPage = next;
+                document.getElementById('p' + currentPage).classList.add('active');
+            } else if (next >= totalPages) {
+                alert('انتظر الدروس القادمة يا بطل!');
+            }
         }
 
         window.onload = autoFit;
