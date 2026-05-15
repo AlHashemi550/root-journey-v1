@@ -5,23 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كتاب رحلة Root - أبو يزن الهاشمي</title>
     <style>
-        :root { --gold: #c0a060; --maroon: #600000; --bg: #000; --paper: #f9f4e8; --pink: #e91e63; }
+        /* استيراد خطوط عربية شبيهة بالرقعة */
+        @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
+
+        :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; --paper: #f9f4e8; }
         
         body { 
             background-color: var(--bg); margin: 0; padding: 0; 
-            font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden;
+            font-family: 'Aref Ruqaa', serif; overflow: hidden;
             display: flex; flex-direction: column; height: 100vh;
         }
 
-        /* شريط التحكم */
         .header-tools {
             position: fixed; top: 0; width: 100%; height: 60px;
             background: #111; display: flex; justify-content: center; align-items: center;
             gap: 20px; z-index: 10000; border-bottom: 2px solid var(--gold);
         }
-        .zoom-btn { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .zoom-btn { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-family: sans-serif; }
 
-        /* منطقة الكتاب */
         #viewport {
             flex: 1; display: flex; align-items: center; justify-content: center;
             margin-top: 60px; perspective: 2500px; padding: 20px;
@@ -38,84 +39,52 @@
         }
 
         .page {
-            background: var(--paper); color: #222;
+            background: #000; color: #fff;
             width: 100%; height: 100%; position: absolute;
-            top: 0; left: 0; padding: 60px; box-sizing: border-box;
-            display: none; border-radius: 5px;
-            border-right: 18px solid var(--maroon);
-            box-shadow: inset 50px 0 50px -50px rgba(0,0,0,0.2); 
-            overflow: hidden;
+            top: 0; left: 0; padding: 40px; box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 10px; border: 4px solid var(--gold);
+            overflow: hidden; text-align: center;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+                url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
         }
 
-        .page.active { display: block; }
-
-        /* تصميم الغلاف (الطابع الأول الفخم) */
-        .cover-design {
-            background: #000;
-            color: #fff;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 3px solid var(--gold);
-            position: relative;
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+        /* تأثيرات تقنية في الخلفية */
+        .tech-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(0deg, rgba(0, 255, 70, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0, 255, 70, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px; z-index: 1;
         }
 
-        /* رسومات خلفية رقمية خفيفة */
-        .cover-design::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.2;
+        .hacker-icon {
+            font-size: 100px; margin-bottom: 20px; z-index: 2;
+            filter: drop-shadow(0 0 20px var(--pink));
         }
 
-        .cover-design h1 {
-            color: var(--pink);
-            font-size: 5em;
-            margin: 0;
-            text-shadow: 0 0 30px rgba(233, 30, 99, 0.7);
-            z-index: 2;
+        h1 {
+            color: var(--pink); font-size: 5.5em; margin: 0;
+            text-shadow: 0 0 30px rgba(233, 30, 99, 0.8); z-index: 2;
         }
 
-        .cover-design .subtitle {
-            font-size: 1.8em;
-            margin: 20px 0;
-            color: #eee;
-            z-index: 2;
+        .subtitle {
+            font-size: 1.8em; margin: 15px 0; color: #fff;
+            border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+            padding: 10px 0; width: 80%; z-index: 2;
         }
 
-        .cover-design .author {
-            color: var(--gold);
-            font-size: 1.4em;
-            font-weight: bold;
-            z-index: 2;
+        .info-section {
+            margin-top: 40px; color: var(--gold); font-size: 1.4em; z-index: 2;
         }
 
-        .cover-design .date {
-            margin-top: 15px;
-            color: #888;
-            font-size: 1em;
-            z-index: 2;
-        }
+        .info-section p { margin: 8px 0; }
 
-        .start-button {
-            margin-top: 50px;
-            background: var(--gold);
-            color: #000;
-            padding: 20px 60px;
-            border-radius: 50px;
-            font-size: 1.5em;
-            font-weight: bold;
-            box-shadow: 0 10px 20px rgba(192, 160, 96, 0.3);
-            cursor: pointer;
-            z-index: 2;
-            transition: 0.3s;
+        .date-badge {
+            margin-top: 20px; background: rgba(192, 160, 96, 0.1);
+            padding: 5px 20px; border-radius: 20px; border: 1px solid var(--gold);
+            font-size: 0.9em; color: #888; z-index: 2;
         }
-
-        .start-button:hover { transform: scale(1.05); }
 
         .nav-bar {
             position: fixed; bottom: 20px; width: 100%;
@@ -130,32 +99,39 @@
 <body>
 
     <div class="header-tools">
-        <button class="zoom-btn" onclick="handleZoom(0.15)">تكبير +</button>
-        <span id="zVal" style="color:var(--gold); font-weight:bold;">100%</span>
-        <button class="zoom-btn" onclick="handleZoom(-0.15)">تصغير -</button>
-        <button class="zoom-btn" style="background:#fff" onclick="resetZoom()">إعادة</button>
+        <button class="zoom-btn" onclick="handleZoom(0.15)">ZOOM +</button>
+        <span id="zVal" style="color:var(--gold); font-weight:bold; font-family:sans-serif;">100%</span>
+        <button class="zoom-btn" onclick="handleZoom(-0.15)">ZOOM -</button>
     </div>
 
     <div id="viewport">
         <div id="zoom-layer">
             <div class="book-frame">
                 
-                <div class="page active cover-design">
-                    <img src="https://alhashemi550.github.io/alhashimi_root/logo.png" style="width:180px; margin-bottom:20px; z-index:2;">
+                <div class="page active">
+                    <div class="tech-bg"></div>
+                    
+                    <div class="hacker-icon">👤💻</div>
+                    
                     <h1>رحلة Root</h1>
                     <p class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني</p>
-                    <p class="author">المدون: أبو يزن الهاشمي</p>
-                    <p class="date">تاريخ الإنشاء: مايو 2026</p>
-                    <div class="start-button">ابدأ الرحلة</div>
+                    
+                    <div class="info-section">
+                        <p>المدون: <b>أبو يزن الهاشمي</b></p>
+                        <p>الهاتف: <span dir="ltr">783234925</span></p>
+                    </div>
+
+                    <div class="date-badge">
+                        تاريخ الإنشاء: الجمعة، 15 مايو 2026
+                    </div>
+
+                    <div style="margin-top:50px; color:rgba(255,255,255,0.3); font-family:monospace; letter-spacing: 5px;">
+                        01010110 01001001 01010000
+                    </div>
                 </div>
 
             </div>
         </div>
-    </div>
-
-    <div class="nav-bar">
-        <button class="nav-btn" onclick="alert('جاري إدراج الدروس الجديدة...')">السابق</button>
-        <button class="nav-btn" onclick="alert('جاري إدراج الدروس الجديدة...')">التالي</button>
     </div>
 
     <script>
@@ -165,11 +141,6 @@
             if (zoomLevel < 0.5) zoomLevel = 0.5;
             document.getElementById('zoom-layer').style.transform = "scale(" + zoomLevel + ")";
             document.getElementById('zVal').innerText = Math.round(zoomLevel * 100) + "%";
-        }
-        function resetZoom() {
-            zoomLevel = 1.0;
-            document.getElementById('zoom-layer').style.transform = "scale(1)";
-            document.getElementById('zVal').innerText = "100%";
         }
     </script>
 </body>
