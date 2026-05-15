@@ -3,74 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كتاب رحلة Root - النسخة النهائية</title>
+    <title>كتاب رحلة Root - النسخة الثابتة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
-        :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; }
-        body { background: var(--bg); margin: 0; padding: 0; font-family: 'Aref Ruqaa', serif; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
         
-        /* شريط التحكم */
-        .header-tools { position: fixed; top: 0; width: 100%; height: 60px; background: #111; display: flex; justify-content: center; align-items: center; gap: 15px; z-index: 10000; border-bottom: 2px solid var(--gold); }
-        .zoom-btn { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-family: sans-serif; }
-
-        /* العرض الذكي */
-        #viewport { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); }
-        #zoom-layer { transition: transform 0.4s ease-out; transform-origin: center center; display: flex; align-items: center; justify-content: center; }
-
-        /* الغلاف */
-        .cover { width: 90vw; max-width: 800px; height: 85vh; background: #000; border: 4px solid var(--gold); border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; box-sizing: border-box; text-align: center; position: relative; }
+        :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; --maroon: #500000; }
         
-        /* أيقونة الهكر البرمجية (ثابتة للأبد) */
-        .hacker-svg { width: 180px; height: 180px; filter: drop-shadow(0 0 20px var(--pink)); margin-bottom: 20px; }
+        body { 
+            background: var(--bg); margin: 0; padding: 0; 
+            font-family: 'Aref Ruqaa', serif; overflow: hidden;
+            display: flex; flex-direction: column; height: 100vh;
+        }
 
-        h1 { color: var(--pink); font-size: 5.5em; margin: 0; text-shadow: 0 0 25px rgba(233,30,99,0.7); }
-        .subtitle { font-size: 1.8em; color: #fff; margin: 15px 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 10px 0; width: 85%; }
-        .author-info { color: var(--gold); font-size: 1.5em; margin-top: 25px; line-height: 1.6; }
+        /* التحكم العلوي */
+        .header-tools {
+            position: fixed; top: 0; width: 100%; height: 60px;
+            background: #111; display: flex; justify-content: center; align-items: center;
+            gap: 15px; z-index: 10000; border-bottom: 2px solid var(--gold);
+        }
+        .zoom-btn {
+            background: var(--gold); color: #000; border: none; padding: 8px 18px;
+            border-radius: 6px; cursor: pointer; font-weight: bold; font-family: sans-serif;
+        }
+
+        /* منطقة العرض */
+        #viewport {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+        }
+
+        #zoom-layer {
+            transition: transform 0.4s ease-out; transform-origin: center center;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* تصميم الغلاف الثابت */
+        .cover-master {
+            width: 90vw; max-width: 800px; height: 85vh;
+            background: #000; border: 4px solid var(--gold); border-radius: 20px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 40px; box-sizing: border-box; text-align: center;
+            box-shadow: 0 0 50px rgba(192, 160, 96, 0.2);
+            position: relative;
+        }
+
+        /* أيقونة الهكر المثبتة بالكود */
+        .hacker-icon-fixed {
+            width: 200px; height: 200px; filter: drop-shadow(0 0 20px var(--pink));
+            margin-bottom: 25px;
+        }
+
+        h1 { 
+            color: var(--pink); font-size: 5.5em; margin: 0; 
+            text-shadow: 0 0 30px rgba(233, 30, 99, 0.7); 
+        }
+
+        .subtitle {
+            font-size: 1.8em; color: #fff; margin: 15px 0;
+            border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+            padding: 10px 0; width: 80%;
+        }
+
+        .author-details {
+            color: var(--gold); font-size: 1.6em; margin-top: 30px; line-height: 1.5;
+        }
+
+        .nav-dock {
+            position: fixed; bottom: 20px; width: 100%;
+            display: flex; justify-content: center; gap: 40px; z-index: 1000;
+        }
+        .nav-btn {
+            background: var(--maroon); color: white; border: 2px solid var(--gold);
+            padding: 12px 45px; border-radius: 50px; cursor: pointer;
+            font-family: 'Aref Ruqaa', serif; font-size: 1.3em;
+        }
     </style>
 </head>
 <body>
+
     <div class="header-tools">
-        <button class="zoom-btn" onclick="adjustZoom(0.1)">تكبير +</button>
-        <span id="zVal" style="color:var(--gold); font-weight:bold; font-family:sans-serif;">100%</span>
-        <button class="zoom-btn" onclick="adjustZoom(-0.1)">تصغير -</button>
-        <button class="zoom-btn" style="background:#fff" onclick="resetToFit()">الحجم المناسب</button>
+        <button class="zoom-btn" onclick="zoom(0.1)">تكبير +</button>
+        <span id="zoomVal" style="color:var(--gold); font-weight:bold; width:60px; text-align:center;">100%</span>
+        <button class="zoom-btn" onclick="zoom(-0.1)">تصغير -</button>
+        <button class="zoom-btn" style="background:#fff" onclick="autoFit()">الوضع الافتراضي</button>
     </div>
 
     <div id="viewport">
         <div id="zoom-layer">
-            <div class="cover">
-                <svg class="hacker-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="cover-master">
+                <svg class="hacker-icon-fixed" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2C7.5 2 4 4.5 4 8C4 9.5 4.5 10.5 5.5 11.5L2 15V17H22V15L18.5 11.5C19.5 10.5 20 9.5 20 8C20 4.5 16.5 2 12 2Z" fill="#e91e63"/>
                     <rect x="4" y="18" width="16" height="2" fill="#c0a060"/>
-                    <path d="M9 13H15M10 15H14" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M9 13H15M10 15H14" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                    <circle cx="12" cy="8" r="1" fill="white" opacity="0.5"/>
                 </svg>
                 
                 <h1>رحلة Root</h1>
-                <div class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني<br><small>Journey of Root (Ar-En)</small></div>
+                <div class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني<br><small>Journey of Root (Ar/En)</small></div>
                 
-                <div class="author-info">
+                <div class="author-details">
                     المدون: <b>أبو يزن الهاشمي</b><br>
-                    الهاتف: 783234925<br>
-                    <span style="color:#666; font-size:0.7em;">تاريخ الإنشاء: الجمعة، 15 مايو 2026</span>
+                    الهاتف: 783234925
+                </div>
+
+                <div style="margin-top:20px; color:#555; font-size:0.8em; font-family:sans-serif;">
+                    Created: May 15, 2026
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="nav-dock">
+        <button class="nav-btn" onclick="alert('أنت في الغلاف')">السابق</button>
+        <button class="nav-btn" onclick="alert('جاري تجهيز الدروس الجديدة...')">التالي</button>
+    </div>
+
     <script>
-        let scale = 1.0;
-        function resetToFit() {
-            const screenWidth = window.innerWidth;
-            scale = (screenWidth < 600) ? (screenWidth / 850) : 1.0;
-            apply();
+        let currentScale = 1.0;
+        const layer = document.getElementById('zoom-layer');
+
+        function autoFit() {
+            const sw = window.innerWidth;
+            // ذكاء العرض: إذا كانت الشاشة صغيرة (جوال) يصغر الغلاف تلقائياً ليظهر كاملاً
+            currentScale = (sw < 700) ? (sw / 850) : 1.0;
+            update();
         }
-        function adjustZoom(delta) { scale += delta; apply(); }
-        function apply() {
-            document.getElementById('zoom-layer').style.transform = "scale(" + scale + ")";
-            document.getElementById('zVal').innerText = Math.round(scale * 100) + "%";
+
+        function zoom(amt) {
+            currentScale += amt;
+            if (currentScale < 0.2) currentScale = 0.2;
+            update();
         }
-        window.onload = resetToFit;
-        window.onresize = resetToFit;
+
+        function update() {
+            layer.style.transform = "scale(" + currentScale + ")";
+            document.getElementById('zoomVal').innerText = Math.round(currentScale * 100) + "%";
+        }
+
+        window.onload = autoFit;
+        window.onresize = autoFit;
     </script>
 </body>
 </html>
