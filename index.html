@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رحلة Root - النسخة الكاملة النهائية</title>
+    <title>رحلة Root - المحتوى الكامل والشامل</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -20,97 +20,121 @@
         .cover-page.active { display: flex; }
         .lesson-page { background: var(--paper); color: #000; font-family: 'IBM Plex Sans Arabic', sans-serif; line-height: 1.8; }
         .lesson-title { color: var(--maroon); border-bottom: 3px solid var(--maroon); padding-bottom: 10px; font-size: 1.8em; font-weight: 700; margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: #fff; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #fff; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
         th { background: var(--maroon); color: #fff; }
-        .highlight { background: #fff3e0; border-right: 5px solid #ff9800; padding: 15px; margin: 15px 0; border-radius: 4px; }
-        .code-box { background: #222; color: #0f0; padding: 12px; direction: ltr; font-family: monospace; border-radius: 8px; margin: 10px 0; overflow-x: auto; }
-        .nav-dock { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 40px; z-index: 1000; }
-        .nav-link { background: var(--maroon); color: #fff; border: 2px solid var(--gold); padding: 10px 40px; border-radius: 50px; cursor: pointer; font-size: 1.1em; font-family: 'IBM Plex Sans Arabic'; }
+        .highlight { background: #fff3e0; border-right: 6px solid #ff9800; padding: 15px; margin: 20px 0; border-radius: 4px; font-weight: bold; }
+        .code-box { background: #222; color: #0f0; padding: 15px; direction: ltr; font-family: monospace; border-radius: 8px; margin: 15px 0; overflow-x: auto; font-size: 0.9em; }
+        .nav-dock { position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 30px; z-index: 1000; }
+        .nav-link { background: var(--maroon); color: #fff; border: 2px solid var(--gold); padding: 12px 45px; border-radius: 50px; cursor: pointer; font-size: 1.2em; transition: 0.3s; }
     </style>
 </head>
 <body>
+
     <div class="header-tools">
         <button class="zoom-btn" onclick="zoom(0.1)">تكبير +</button>
-        <span id="zVal" style="color:var(--gold); font-weight:bold;">100%</span>
+        <span id="zVal" style="color:var(--gold); font-weight:bold; min-width: 50px; text-align: center;">100%</span>
         <button class="zoom-btn" onclick="zoom(-0.1)">تصغير -</button>
     </div>
 
     <div id="viewport">
         <div id="zoom-layer">
             <div class="book-container">
+                
                 <div class="page cover-page active" id="p0">
-                    <i class="bi bi-shield-lock" style="font-size: 100px; color: var(--pink);"></i>
-                    <h1 style="font-size: 4em; color: var(--pink); margin: 10px 0;">رحلة Root</h1>
-                    <p style="font-size: 1.8em;">من الصفر حتى الاحتراف في الأمن السيبراني</p>
-                    <div style="margin-top: 40px; font-size: 1.3em; color: var(--gold);">إعداد: أبو يزن الهاشمي | 783234925</div>
+                    <i class="bi bi-shield-lock-fill" style="font-size: 110px; color: var(--pink);"></i>
+                    <h1 style="font-size: 4.5em; color: var(--pink); margin: 0;">رحلة Root</h1>
+                    <p style="font-size: 1.8em; color: var(--gold);">من الصفر حتى الاحتراف في الأمن السيبراني</p>
+                    <hr style="width: 60%; border: 1px solid var(--gold);">
+                    <p style="font-size: 1.4em;">إعداد المبرمج: محمد الهاشمي (أبو يزن)</p>
+                    <p>تلفون: 783234925</p>
                 </div>
 
                 <div class="page lesson-page" id="p1">
                     <h2 class="lesson-title">الدرس الأول</h2>
                     <p>الحاسوب لا يفهم الحروف، بل يفهم فقط (0) و (1). تمشي الأرقام بمبدأ المضاعفة (1, 2, 4, 8, 16, 32).</p>
-                    <p>كيف يعني؟ يعني ان الكمبيوتر مايعرف اي رقم او اي حرف كل الأرقام والحروف عنده (0،1) فقط ويسمى عمليه الست عشريه خلينا نعرف كيف يكتب الرقم 10 في نظام الكمبيوتر.</p>
+                    <p>كيف يعني؟</p>
+                    <p>يعني ان الكمبيوتر مايعرف اي رقم او اي حرف كل الأرقام والحروف عنده (0،1) فقط ويسمى عمليه الست عشريه خلينا نعرف كيف يكتب الرقم 10 في نظام الكمبيوتر.</p>
                     <p>المجموعة تتكون من 6 خانات خلينا نستخدم 4 في تحليل رقم عشره بلغه الحاسوب معك 1،2،4،8 نكتب الرقم 10 كالتالي:</p>
                     <table>
-                        <tr><th>المجموعة</th><td>8</td><td>4</td><td>2</td><td>1</td></tr>
-                        <tr><th>الاستخدام</th><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><th>الخانة</th><td>8</td><td>4</td><td>2</td><td>1</td></tr>
+                        <tr><th>الاستخدام</th><td>نعم (1)</td><td>لا (0)</td><td>نعم (1)</td><td>لا (0)</td></tr>
                     </table>
                     <p>الرقم الذي نستخدمه من المجموعة نكتبه (1 والرقم الذي لا نستخدمه نكتبه برقم 0)</p>
                     <p>يعني (ثمانيه نحتاجها؟ نعم نكتبها 1، اربعه نستخدمها؟ لا نكتبها برقم 0، كذلك 2 هل نستخدمه؟ نعم نكتبه برقم 1، كذلك 1 نستخدمه؟ لا نعد نحتاجه فنكتبه برقم 0). اذا رقم 10 يكتب بلغه الحاسوب (1010).</p>
-                    <div class="highlight">
-                        <strong>البت والبايت:</strong><br>
-                        • البت (Bit): أصغر وحدة رقمية (0 أو 1).<br>
-                        • البايت (Byte): مجموعة من 8 بت.<br>
-                        • مثال: صورة بحجم 1MB تتكون من 8 مليون مفتاح مرصوصة بجانب بعضها.
-                    </div>
+                    <div class="highlight">البت (Bit): أصغر وحدة رقمية (0 أو 1).<br>البايت (Byte): مجموعة من 8 بت.</div>
                 </div>
 
                 <div class="page lesson-page" id="p2">
                     <h2 class="lesson-title">الدرس الثاني: أساسيات الشبكات</h2>
-                    <p>الشبكات هي وسيلة تنقل معلومات بين هذا العالم، ومن أهم مكوناتها:</p>
+                    <p>الشبكات هي وسيلة تنقل معلومات بين هذا العالم، ويجب توفير مستلزمات هذه الشبكة لكي تشتغل:</p>
                     <table>
-                        <tr><th>المصطلح</th><th>الوظيفة</th></tr>
-                        <tr><td>IP Address</td><td>عنوان المكان (مثل موقع أخوك الضائع).</td></tr>
-                        <tr><td>DNS</td><td>يحول الأسماء لأرقام (مثل دفتر الهاتف).</td></tr>
-                        <tr><td>Ports</td><td>منافذ تنفيذ الطلبات (فتحات في جدار البيت).</td></tr>
+                        <tr><th>المصطلح</th><th>الوظيفة والوصف</th><th>مثال توضيحي</th></tr>
+                        <tr><td>IP Address</td><td>عنوان المكان (مثل: 192.168.1.10)</td><td>مثل أخوك الضائع في شارع مجهول.</td></tr>
+                        <tr><td>DNS</td><td>يحول الأسماء لأرقام (Domain Name System)</td><td>لو تعطل، تعطل الإنترنت في نظرك.</td></tr>
+                        <tr><td>Ports</td><td>منافذ تنفيذ الطلبات (مثل المنفذ 443 و 80)</td><td>فتحات في جدار البيت لدخول الطلبات.</td></tr>
+                        <tr><td>Firewall</td><td>الجدار الناري (الحارس الشخصي)</td><td>يقرر من يدخل ومن يخرج لحماية المنافذ.</td></tr>
                     </table>
                 </div>
 
                 <div class="page lesson-page" id="p3">
                     <h2 class="lesson-title">الدرس الثالث: التشفير والطحن</h2>
-                    <p>الـ VPN يصنع "نفقاً مشفراً" يمنع التجسس. والـ HTTPS يضمن المصافحة الآمنة.</p>
-                    <div class="highlight">
-                        <strong>التشفير:</strong> يمكن فكه بالمفاتيح.<br>
-                        <strong>الطحن (Hash):</strong> بصمة فريدة مستحيل فكها، تستخدم لحماية كلمات السر.
-                    </div>
+                    <p>الـ <strong>VPN</strong> يصنع "نفقاً مشفراً" يمنع شركة الإنترنت من التجسس عليك. والـ <strong>HTTPS</strong> يضمن المصافحة الآمنة.</p>
+                    <div class="highlight">التشفير (Encryption): يمكن فكه بالمفاتيح (مثل تشفير الرسائل).<br>الطحن (Hashing): دالة الاتجاه الواحد، مستحيل فكها، وتستخدم لحماية كلمات السر كبصمة فريدة.</div>
                 </div>
 
                 <div class="page lesson-page" id="p4">
-                    <h2 class="lesson-title">الدرس الرابع: أنواع الهجوم</h2>
+                    <h2 class="lesson-title">الدرس الرابع: أنواع الهجوم والحلول</h2>
+                    <p>المخترق الذكي لا يعطي البرنامج ما يتوقعه، ومن أهم الهجمات:</p>
                     <ul>
-                        <li><strong>حقن SQL:</strong> خداع قاعدة البيانات.</li>
-                        <li><strong>التصيد (Phishing):</strong> روابط وهمية لسرقة البيانات.</li>
-                        <li><strong>DDoS:</strong> إغراق الموقع بطلبات وهمية لإسقاطه.</li>
+                        <li><strong>حقن SQL:</strong> خداع قاعدة البيانات بكود خبيث لتسريب البيانات.</li>
+                        <li><strong>التخمين (Brute Force):</strong> تجربة آلاف كلمات السر حتى الوصول للصح.</li>
+                        <li><strong>التصيد (Phishing):</strong> روابط وهمية مثل "مبروك فزت" لسرقة الحسابات.</li>
+                        <li><strong>DDoS:</strong> إغراق الموقع بطلبات وهمية لإسقاط السيرفر.</li>
                     </ul>
+                    <div class="highlight">الحل دائماً في تحديث الأكواد، فلترة المدخلات، واستخدام كلمات سر معقدة.</div>
                 </div>
 
                 <div class="page lesson-page" id="p5">
                     <h2 class="lesson-title">الدرس الخامس: الصلاحيات (RWX)</h2>
-                    <p>المخترق يسعى دائماً لرفع صلاحياته (Privilege Escalation) ليصبح Root.</p>
-                    <p>الصلاحيات الأساسية: Read (قراءة)، Write (كتابة)، Execute (تنفيذ).</p>
+                    <p>الصلاحيات هي التي تحدد من يملك المفاتيح ومن يبقى خارج النظام. المخترق يسعى دائماً لرفع صلاحياته (Privilege Escalation) ليصبح <strong>Root</strong>.</p>
+                    <h3>أنواع الصلاحيات:</h3>
+                    <ul>
+                        <li><strong>Read (R):</strong> عرض محتوى الملفات.</li>
+                        <li><strong>Write (W):</strong> تعديل المحتوى (خطر فيروسات الفدية).</li>
+                        <li><strong>Execute (X):</strong> تشغيل البرامج والأوامر.</li>
+                    </ul>
                 </div>
 
                 <div class="page lesson-page" id="p6">
                     <h2 class="lesson-title">الدرس السادس: النواة (Kernel)</h2>
-                    <p>النواة هي العقل المدبر. نستخدم الأوامر التالية لمراقبتها في Termux:</p>
-                    <div class="code-box">uname -a (فحص النواة)\nps -ef (عرض العمليات PID)\ntop (مراقبة الأداء)\nkill -9 [PID] (قتل الفيروس)</div>
+                    <p>النواة هي العقل المدبر والمرشد السياحي لكل أمر في الجهاز. الكمبيوتر لا يفهم أي لغة بدونها.</p>
+                    <p><strong>نداء النظام (System Call):</strong> هو طلب رسمي يرسله البرنامج للنواة (مثل طلب فتح الكاميرا). النواة تعزل كل برنامج في "زنزانة" في الرام لضمان الخصوصية.</p>
+                    <p><strong>العمليات (Processes):</strong> كل برنامج له رقم هوية فريد يسمى <strong>PID</strong>.</p>
                 </div>
 
                 <div class="page lesson-page" id="p7">
+                    <h2 class="lesson-title">تابع الدرس السادس: كشف الاختراق</h2>
+                    <p>باستخدام تطبيق <strong>Termux</strong>، يمكنك فحص جهازك بالأوامر التالية:</p>
+                    <div class="code-box">
+                        uname -a (لمعرفة إصدار النواة وثغراتها)<br>
+                        ps -ef (لعرض كافة العمليات الشغالة بالهوية)<br>
+                        top (لمراقبة استهلاك المعالج - إذا كان 100% فهناك فيروس)<br>
+                        kill -9 [PID] (لقتل أي عملية مشبوهة فوراً)
+                    </div>
+                </div>
+
+                <div class="page lesson-page" id="p8">
                     <h2 class="lesson-title">الدرس السابع: إنشاء المواقع</h2>
-                    <p>نستخدم مكتبة Flask في لغة Python لإنشاء السيرفر المحلي:</p>
-                    <div class="code-box">pkg install python flask -y\npython app.py</div>
-                    <p>الموقع يعمل على الرابط: <code>http://localhost:8080</code></p>
+                    <p>لإنشاء سيرفر محلي في Termux، نستخدم مكتبة Flask بلغة Python:</p>
+                    <div class="code-box">
+                        pkg update && pkg upgrade -y<br>
+                        pkg install python flask git -y<br>
+                        nano app.py (لكتابة الكود)<br>
+                        python app.py (لتشغيل السيرفر)
+                    </div>
+                    <p>يفتح الموقع على الرابط: <code>http://localhost:8080</code></p>
+                    <div class="highlight">نصيحة: اربط مشروعك بـ GitHub لحمايته من الضياع والوصول إليه من أي مكان.</div>
                 </div>
 
             </div>
@@ -123,7 +147,7 @@
     </div>
 
     <script>
-        let scale = 1.0; let cur = 0; const total = 8;
+        let scale = 1.0; let cur = 0; const total = 9;
         function autoFit() { scale = (window.innerWidth < 700) ? (window.innerWidth / 850) : 1.0; apply(); }
         function zoom(amt) { scale += amt; apply(); }
         function apply() { document.getElementById('zoom-layer').style.transform = "scale("+scale+")"; document.getElementById('zVal').innerText = Math.round(scale*100)+"%"; }
