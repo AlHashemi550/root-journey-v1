@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كتاب رحلة Root - أبو يزن الهاشمي</title>
+    <title>كتاب رحلة Root - النسخة الملكية</title>
     <style>
-        /* استيراد خطوط عربية شبيهة بالرقعة */
         @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
-
-        :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; --paper: #f9f4e8; }
+        :root { --gold: #c0a060; --pink: #e91e63; --bg: #000; --paper: #f9f4e8; --maroon: #600000; }
         
         body { 
             background-color: var(--bg); margin: 0; padding: 0; 
@@ -16,6 +14,7 @@
             display: flex; flex-direction: column; height: 100vh;
         }
 
+        /* شريط التحكم العلوي */
         .header-tools {
             position: fixed; top: 0; width: 100%; height: 60px;
             background: #111; display: flex; justify-content: center; align-items: center;
@@ -23,6 +22,7 @@
         }
         .zoom-btn { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-family: sans-serif; }
 
+        /* منطقة الكتاب */
         #viewport {
             flex: 1; display: flex; align-items: center; justify-content: center;
             margin-top: 60px; perspective: 2500px; padding: 20px;
@@ -38,61 +38,48 @@
             position: relative; box-shadow: 0 0 100px rgba(0,0,0,0.9);
         }
 
+        /* تنسيق الصفحات */
         .page {
-            background: #000; color: #fff;
             width: 100%; height: 100%; position: absolute;
-            top: 0; left: 0; padding: 40px; box-sizing: border-box;
+            top: 0; left: 0; padding: 50px; box-sizing: border-box;
+            display: none; border-radius: 5px;
+            overflow-y: auto;
+        }
+        .page.active { display: block; }
+
+        /* تصميم الغلاف الاحترافي */
+        .cover-page {
+            background: #000; color: #fff; border: 4px solid var(--gold);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border-radius: 10px; border: 4px solid var(--gold);
-            overflow: hidden; text-align: center;
-            background-image: 
-                linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-                url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            text-align: center;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
         }
 
-        /* تأثيرات تقنية في الخلفية */
-        .tech-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(0deg, rgba(0, 255, 70, 0.05) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(0, 255, 70, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px; z-index: 1;
+        .hacker-img {
+            width: 220px; height: 220px; border-radius: 50%;
+            border: 3px solid var(--gold); margin-bottom: 20px;
+            box-shadow: 0 0 30px var(--pink);
+            object-fit: cover;
         }
 
-        .hacker-icon {
-            font-size: 100px; margin-bottom: 20px; z-index: 2;
-            filter: drop-shadow(0 0 20px var(--pink));
+        .cover-page h1 {
+            color: var(--pink); font-size: 5em; margin: 0;
+            text-shadow: 0 0 25px rgba(233,30,99,0.7);
         }
 
-        h1 {
-            color: var(--pink); font-size: 5.5em; margin: 0;
-            text-shadow: 0 0 30px rgba(233, 30, 99, 0.8); z-index: 2;
-        }
+        .subtitle { font-size: 1.8em; margin: 10px 0; color: #fff; line-height: 1.4; }
+        .author-info { color: var(--gold); font-size: 1.5em; margin-top: 20px; }
+        .footer-meta { margin-top: 20px; color: #888; font-size: 1em; }
 
-        .subtitle {
-            font-size: 1.8em; margin: 15px 0; color: #fff;
-            border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
-            padding: 10px 0; width: 80%; z-index: 2;
-        }
-
-        .info-section {
-            margin-top: 40px; color: var(--gold); font-size: 1.4em; z-index: 2;
-        }
-
-        .info-section p { margin: 8px 0; }
-
-        .date-badge {
-            margin-top: 20px; background: rgba(192, 160, 96, 0.1);
-            padding: 5px 20px; border-radius: 20px; border: 1px solid var(--gold);
-            font-size: 0.9em; color: #888; z-index: 2;
-        }
-
+        /* أزرار التنقل السفلية */
         .nav-bar {
             position: fixed; bottom: 20px; width: 100%;
             display: flex; justify-content: center; gap: 40px; z-index: 1000;
         }
         .nav-btn {
             background: var(--maroon); color: white; border: 2px solid var(--gold);
-            padding: 12px 35px; border-radius: 50px; cursor: pointer; font-weight: bold;
+            padding: 12px 40px; border-radius: 50px; cursor: pointer; font-weight: bold;
+            font-family: 'Aref Ruqaa', serif; font-size: 1.2em;
         }
     </style>
 </head>
@@ -108,30 +95,32 @@
         <div id="zoom-layer">
             <div class="book-frame">
                 
-                <div class="page active">
-                    <div class="tech-bg"></div>
-                    
-                    <div class="hacker-icon">👤💻</div>
-                    
+                <div class="page active cover-page">
+                    <img src="https://img.freepik.com/free-vector/hooded-hacker-gaming-logo_23-2148155988.jpg" class="hacker-img">
                     <h1>رحلة Root</h1>
-                    <p class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني</p>
+                    <p class="subtitle">من الصفر حتى الاحتراف في الأمن السيبراني<br><small>(Ar-En Version)</small></p>
                     
-                    <div class="info-section">
-                        <p>المدون: <b>أبو يزن الهاشمي</b></p>
-                        <p>الهاتف: <span dir="ltr">783234925</span></p>
+                    <div class="author-info">
+                        المدون: أبو يزن الهاشمي<br>
+                        الهاتف: <span dir="ltr">783234925</span>
                     </div>
 
-                    <div class="date-badge">
+                    <div class="footer-meta">
                         تاريخ الإنشاء: الجمعة، 15 مايو 2026
                     </div>
-
-                    <div style="margin-top:50px; color:rgba(255,255,255,0.3); font-family:monospace; letter-spacing: 5px;">
-                        01010110 01001001 01010000
+                    
+                    <div style="margin-top:30px; background:var(--gold); color:#000; padding:10px 30px; border-radius:50px; font-weight:bold;">
+                        انقر على "التالي" لبدء الدروس
                     </div>
                 </div>
 
-            </div>
+                </div>
         </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" onclick="alert('أنت في الغلاف حالياً')">السابق</button>
+        <button class="nav-btn" onclick="alert('جاري تجهيز الدروس الجديدة...')">التالي</button>
     </div>
 
     <script>
